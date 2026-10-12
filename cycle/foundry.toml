@@ -1,0 +1,23 @@
+# cycle/ — Foundry project for the neurosymbolic FV cycle (ADR-0001).
+# Canonical solver core [5] = SMTChecker built into this exact solc.
+#
+# T-02 pin: solc 0.8.35 (native arm64, brew). Rationale in cycle/README.md.
+# We point Foundry at the SAME brew binary the SMTChecker pipeline calls, so
+# there is exactly one compiler in play (no second Rosetta/x86_64 solc).
+
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+# Absolute path to the native arm64 0.8.35 with z3 linked in (see README).
+# On another machine: `which solc` after `brew install solidity`, or use "0.8.35".
+solc = "/opt/homebrew/bin/solc"
+
+# SMTChecker defaults for `forge build`. The deterministic runner [5] (T-06)
+# will call solc directly with these same knobs; kept here as the source of truth.
+[profile.default.model_checker]
+engine = "chc"
+targets = ["assert"]
+solvers = ["z3"]
+timeout = 0          # 0 = no timeout (research run; reproducibility over speed)
+show_unproved = true

@@ -1,0 +1,14 @@
+{
+  "module": "economic_spec_generator",
+  "contract": "ProportionalVault",
+  "method": "deposit",
+  "invariant": {
+    "name": "solvency_price_geq_1",
+    "solidity_expr": "totalShares <= totalAssets",
+    "kind": "contract_invariant",
+    "informal": "share price >= 1: every share is backed by at least one asset unit (no dilution)"
+  },
+  "state_vars_referenced": ["totalShares", "totalAssets"],
+  "rationale": "seed spec for deterministic replay of the proportional vault",
+  "_provenance": {"backend": "seed", "model_requested": "none"}
+}

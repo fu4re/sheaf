@@ -1,0 +1,32 @@
+No files changed, compilation skipped
+
+Ran 1 test for test/Reentrancy.t.sol:ReentrancyTest
+[PASS] test_V_drains() (gas: 531611)
+Traces:
+  [551511] ReentrancyTest::test_V_drains()
+    ├─ [408780] → new Attacker@0x2e234DAe75C793f67A35089C9d99245E1C58470b
+    │   └─ ← [Return] 1929 bytes of code
+    ├─ [0] VM::deal(Attacker: [0x2e234DAe75C793f67A35089C9d99245E1C58470b], 1000000000000000000 [1e18])
+    │   └─ ← [Return]
+    ├─ [95564] Attacker::attack(true)
+    │   ├─ [22537] Bank::deposit{value: 1000000000000000000}()
+    │   │   └─ ← [Stop]
+    │   ├─ [57661] Bank::withdraw_V()
+    │   │   ├─ [49952] Attacker::receive{value: 1000000000000000000}()
+    │   │   │   ├─ [8027] Bank::withdraw_V()
+    │   │   │   │   ├─ [318] Attacker::receive{value: 1000000000000000000}()
+    │   │   │   │   │   └─ ← [Stop]
+    │   │   │   │   └─ ← [Stop]
+    │   │   │   └─ ← [Stop]
+    │   │   └─ ← [Stop]
+    │   └─ ← [Stop]
+    ├─ [447] Attacker::reentries() [staticcall]
+    │   └─ ← [Return] 1
+    ├─ emit Trace(what: "V attacker reentries", value: 1)
+    ├─ emit Trace(what: "V attacker final balance", value: 2000000000000000000 [2e18])
+    ├─ emit Trace(what: "V bank final balance", value: 0)
+    └─ ← [Stop]
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 5.68ms (995.50µs CPU time)
+
+Ran 1 test suite in 188.44ms (5.68ms CPU time): 1 tests passed, 0 failed, 0 skipped (1 total tests)

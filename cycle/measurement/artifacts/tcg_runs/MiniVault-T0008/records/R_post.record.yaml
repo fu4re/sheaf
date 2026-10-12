@@ -1,0 +1,17 @@
+record_id: R_post
+kind: smt_solve
+produced_by:
+  component: tcg.check
+  solc: 0.8.35+commit.47b9dedd.Darwin.appleclang
+subject:
+  human: every share is backed by an asset unit; no value minted from air
+  formal: totalShares == totalAssets
+  shape: stateless
+result:
+  verdict: proven
+  engine: solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled) targets=['assert']
+  reproduce: /opt/homebrew/bin/solc --model-checker-engine chc --model-checker-targets
+    assert --model-checker-solvers z3 --model-checker-timeout 20000 --model-checker-ext-calls
+    untrusted /Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol
+artifacts:
+- cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol

@@ -1,0 +1,237 @@
+[
+  {
+    "fixture": "cycle/contracts/MiniVault.sol",
+    "ops": [
+      "mulDiv"
+    ],
+    "nonlinear_shape": true,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.13,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/MonoVault.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.006,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/ProportionalVault.sol",
+    "ops": [
+      "rayDiv",
+      "rayMul"
+    ],
+    "nonlinear_shape": true,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.007,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/SumVault.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.009,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/cross/FeeERC20.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.013,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/cross/HostileERC20.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.014,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/cross/MiniERC20.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.014,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/contracts/cross/VaultAsset.sol",
+    "ops": [
+      "mulDiv"
+    ],
+    "nonlinear_shape": true,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.008,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/ground_truth/aave_vault/src/ATokenVault.sol",
+    "ops": [
+      "mulDiv",
+      "rayMul"
+    ],
+    "nonlinear_shape": true,
+    "verdict": "compile_error",
+    "reason": "Error: Source \"@openzeppelin-upgradeable/token/ERC20/extensions/ERC4626Upgradeable.sol\" not found: File not found. Searc",
+    "duration_s": 0.007,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/ground_truth/aave_vault/src/ATokenVaultStorage.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.005,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/ground_truth/dss_vat/src/Vat.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "inconclusive",
+    "reason": "no SMTChecker assertion result in output (check engine/targets/solver)",
+    "duration_s": 0.162,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/MonoVaultTemporal.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.096,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/ProportionalVaultGhost.sol",
+    "ops": [],
+    "nonlinear_shape": true,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.132,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/SumVaultGhost.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.073,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/VatDaiConservation.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 1.127,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/VatSolvency.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 1.608,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/BurnFeeERC20Conservation.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.078,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/BurnFeeERC20Delta.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "counterexample",
+    "reason": "",
+    "duration_s": 1.828,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/FeeERC20Conservation.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "counterexample",
+    "reason": "",
+    "duration_s": 3.682,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/MiniERC20Conservation.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.477,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/MiniERC20Delta.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.09,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/MiniERC20NoMintConservation.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.086,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/harness/cross/VaultAssetAG.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.243,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/smt_smoke/ProvableFail.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "counterexample",
+    "reason": "",
+    "duration_s": 0.178,
+    "nonlinear_wall": false
+  },
+  {
+    "fixture": "cycle/trusted/smt_smoke/ProvablePass.sol",
+    "ops": [],
+    "nonlinear_shape": false,
+    "verdict": "proved",
+    "reason": "",
+    "duration_s": 0.022,
+    "nonlinear_wall": false
+  }
+]

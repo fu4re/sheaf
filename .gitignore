@@ -1,0 +1,38 @@
+# --- not part of the research record (separate repos / product surface / local config)
+tcg/
+evm-smith/
+landing/
+site/
+.wrangler/
+wrangler.toml
+DEPLOY.md
+.mcp.json
+.claude/
+bin/
+.DS_Store
+
+# --- third-party sources that cannot be redistributed (fetched by script, pinned by commit)
+cycle/ground_truth/aave_vault/src/
+cycle/ground_truth/aave_vault/certora_specs/
+cycle/ground_truth/dss_vat/lib/
+
+# --- build outputs and caches (reproduced by the commands in README.md)
+__pycache__/
+*.pyc
+.lake/
+out/
+cache/
+*-kompiled/
+kompiled/
+*.kore
+compiled.bin
+cache.bin
+build-info/
+.tcg/
+
+# --- superseded / duplicate material
+kprove-test/_old_reasearch/
+kprove-test/spike_t2_report (1).md
+
+# nested forge-std clones (installed by forge; see THIRD_PARTY.md for the pinned commit)
+**/lib/forge-std

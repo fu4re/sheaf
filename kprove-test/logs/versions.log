@@ -1,0 +1,38 @@
+# C9 environment capture
+## date
+Wed Jul 15 15:08:41 MSK 2026
+## OS
+ProductName:		macOS
+ProductVersion:		14.6
+BuildVersion:		23G80
+Darwin MacBook-Pro-Vladimir.local 23.6.0 Darwin Kernel Version 23.6.0: Fri Jul  5 17:56:41 PDT 2024; root:xnu-10063.141.1~2/RELEASE_ARM64_T6000 arm64
+## kontrol
+Kontrol version: 1.0.255
+## kprove / K
+K version:    v7.1.337
+Build date:   Wed Jul 15 13:49:35 MSK 2026
+## kompile
+K version:    v7.1.337
+Build date:   Wed Jul 15 13:49:35 MSK 2026
+## kore-exec (haskell-backend)
+0.1.155
+## kore-rpc-booster
+0.1.155
+## kevm (bundled)
+KEVM Version: 1.0.678
+## forge
+forge Version: 1.2.3-stable
+Commit SHA: a813a2cee7dd4926e7c56fd8a785b54f32e0d10f
+## solc
+solc, the solidity compiler commandline interface
+Version: 0.8.35+commit.47b9dedd.Darwin.appleclang
+## nix profile (commits)
+Name:               [1mk[0m
+Locked flake URL:   github:runtimeverification/k/4a46d1231473b599c699160132fd6e76a5c46406
+Store paths:        /nix/store/aqjgfc96ra0v1drpil3jlx23frcz5nrb-k-7.1.337-4a46d1231473b599c699160132fd6e76a5c46406
+Name:               [1mkontrol[0m
+Locked flake URL:   github:runtimeverification/kontrol/0ac55eda300e64ec30300117fe71c02d6db59ab5
+Store paths:        /nix/store/2vybc0yvbsip0zmqria1cprkjzihwywa-kontrol-0ac55eda300e64ec30300117fe71c02d6db59ab5
+Name:               [1mkup[0m
+Locked flake URL:   github:runtimeverification/kup/2e3469d16437a2abe639e59123e1a25037ca205b
+Store paths:        /nix/store/c119nsbwqrnr8b9j0pn2iwzrzvxrk7zq-kup-0.2.6

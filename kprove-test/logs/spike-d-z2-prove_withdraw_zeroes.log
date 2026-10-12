@@ -1,0 +1,9 @@
+🏃 Running Kontrol proofs 🏃 
+ Add `--verbose` to `kontrol prove` for more details!
+Selected functions: test%CProof.prove_withdraw_zeroes(uint256)
+Running setup functions in parallel: test%CProof.setUp()
+test%CProof.…  PASSED: 4 nodes: 0 pending|1 passed|0 failing|0 vacuous|0 refute…
+Running test functions in parallel: test%CProof.prove_withdraw_zeroes(uint256)
+test%CProof.prove_withdraw_… PASSED: 12 nodes: 0 pending|1 passed|0 failing|0 v…
+✨ PROOF PASSED ✨ test%CProof.prove_withdraw_zeroes(uint256):0
+⏳ Time: 46s ⏳

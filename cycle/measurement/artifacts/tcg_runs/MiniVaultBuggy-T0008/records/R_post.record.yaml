@@ -1,0 +1,28 @@
+record_id: R_post
+kind: smt_solve
+produced_by:
+  component: tcg.check
+  solc: 0.8.35+commit.47b9dedd.Darwin.appleclang
+subject:
+  human: every share is backed by an asset unit; no value minted from air
+  formal: totalShares == totalAssets
+  shape: stateless
+result:
+  verdict: refuted
+  engine: solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled) targets=['assert']
+  witness:
+    assignments:
+      totalAssets: '0'
+      totalShares: '1'
+    transaction_trace:
+    - __Harness.constructor()
+    - 'State: totalAssets = 0, totalShares = 0'
+    - MiniVaultBuggy.deposit(0)
+    - 'State: totalAssets = 0, totalShares = 1'
+    - __Harness.__check_invariant()
+    - 26 |         assert(totalShares == totalAssets);
+  reproduce: /opt/homebrew/bin/solc --model-checker-engine chc --model-checker-targets
+    assert --model-checker-solvers z3 --model-checker-timeout 20000 --model-checker-ext-calls
+    untrusted /Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVaultBuggy-T0008/build/MiniVaultBuggy__harness.sol
+artifacts:
+- cycle/measurement/artifacts/tcg_runs/MiniVaultBuggy-T0008/build/MiniVaultBuggy__harness.sol

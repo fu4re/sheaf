@@ -1,0 +1,35 @@
+meta:
+  contract: MiniVaultBuggy
+  method: deposit
+  date: '2026-06-29'
+  task: tcg assurance package (T2)
+  phi_hash: 41df8c318802dd635d011e6f6c62254fe5f6966065f0182508bbd2e9d8d6fd34
+  assurance_level: ⊥_gen
+  claim_scope: none (refuted)
+  note: Source-level run. A proven Post over an OPEN dischargeable leaf (H_bytecode
+    / phi_context) is NOT green — see render-rule.
+claims:
+- id: C1
+  human: 'Honest negative: the Post invariant `totalShares == totalAssets` is REFUTED
+    with a concrete counterexample (no value is claimed proved).'
+  formal: totalShares == totalAssets
+  shape: stateless
+  verdict: refuted
+  engine: solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled) targets=['assert']
+  evidence:
+    witness:
+      assignments:
+        totalAssets: '0'
+        totalShares: '1'
+      transaction_trace:
+      - __Harness.constructor()
+      - 'State: totalAssets = 0, totalShares = 0'
+      - MiniVaultBuggy.deposit(0)
+      - 'State: totalAssets = 0, totalShares = 1'
+      - __Harness.__check_invariant()
+      - 26 |         assert(totalShares == totalAssets);
+    smt_query: evidence/smt/C1__MiniVaultBuggy__harness.sol
+    reproduce: /opt/homebrew/bin/solc --model-checker-engine chc --model-checker-targets
+      assert --model-checker-solvers z3 --model-checker-timeout 20000 --model-checker-ext-calls
+      untrusted /Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVaultBuggy-T0008/build/MiniVaultBuggy__harness.sol
+  depends_on: []

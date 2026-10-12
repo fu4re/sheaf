@@ -1,0 +1,80 @@
+{
+  "module": "economic_spec_generator",
+  "mode": "set",
+  "contract": "Vat",
+  "method": "frob",
+  "invariants": [
+    {
+      "name": "global_backed_dai_nonnegative",
+      "solidity_expr": "debt >= vice",
+      "dimension": "solvency",
+      "informal": "Total Dai issued is at least the unbacked (sin-backed) portion, so net system-backed Dai is always non-negative."
+    },
+    {
+      "name": "urn_art_bounded_by_ilk_Art",
+      "solidity_expr": "urns[i][u].art <= ilks[i].Art",
+      "dimension": "accounting",
+      "informal": "No single urn's normalised debt can exceed the ilk's aggregate normalised debt, keeping per-urn accounting consistent with the ilk total."
+    },
+    {
+      "name": "global_debt_covers_ilk_contribution",
+      "solidity_expr": "debt >= ilks[i].Art * ilks[i].rate",
+      "dimension": "accounting",
+      "informal": "Global total Dai (debt) is at least each ilk's fee-adjusted real debt (Art × rate), since debt equals the sum of all ilks' real debt plus vice, all of which are non-negative."
+    },
+    {
+      "name": "urn_collateralised_at_spot",
+      "solidity_expr": "urns[i][u].art * ilks[i].rate <= urns[i][u].ink * ilks[i].spot",
+      "dimension": "solvency",
+      "informal": "After frob, the urn's fee-adjusted real debt (art × rate) does not exceed its collateral value at the safety-margin oracle price (ink × spot)."
+    },
+    {
+      "name": "urn_dust_floor",
+      "solidity_expr": "urns[i][u].art == 0 || urns[i][u].art * ilks[i].rate >= ilks[i].dust",
+      "dimension": "accounting",
+      "informal": "A non-empty urn must carry at least the dust-floor amount of real debt, preventing uneconomic micro-positions that cannot be profitably liquidated."
+    },
+    {
+      "name": "ilk_debt_within_ceiling",
+      "solidity_expr": "ilks[i].Art * ilks[i].rate <= ilks[i].line",
+      "dimension": "conservation",
+      "informal": "When frob increases an ilk's debt, the ilk's total fee-adjusted real debt (Art × rate) must not exceed the per-ilk debt ceiling."
+    },
+    {
+      "name": "global_debt_within_ceiling",
+      "solidity_expr": "debt <= Line",
+      "dimension": "conservation",
+      "informal": "When frob increases debt, the global total Dai issued must not exceed the system-wide debt ceiling."
+    },
+    {
+      "name": "rate_positive_for_ilk",
+      "solidity_expr": "ilks[i].rate != 0",
+      "dimension": "fee",
+      "informal": "The ilk's accumulated rate (principal compounded with stability fees) must be non-zero, ensuring fee-adjusted debt is well-defined and every unit of normalised debt maps to a positive real Dai obligation."
+    }
+  ],
+  "_provenance": {
+    "backend": "claude -p",
+    "model_requested": "sonnet",
+    "session_id": "19e89dec-8796-438d-9ce0-aa6b4950b1b8",
+    "usage": {
+      "input_tokens": 3,
+      "cache_creation_input_tokens": 0,
+      "cache_read_input_tokens": 8940,
+      "output_tokens": 12822,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 0,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard"
+    },
+    "cost_usd": 0.195021
+  }
+}

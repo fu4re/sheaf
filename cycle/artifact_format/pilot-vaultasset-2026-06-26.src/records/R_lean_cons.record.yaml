@@ -1,0 +1,18 @@
+record_id: R_lean_cons
+kind: lean_theorem
+produced_by:
+  component: lean
+subject:
+  human: a transfer debiting one balance and crediting another by the same amount
+    preserves the pair sum — so the tracked-sum ghost == totalSupply is faithful
+  formal: (a - amt) + (b + amt) = a + b   (and the Σ-over-Finset form)
+result:
+  verdict: proven
+  engine: Lean 4.31.0 + Mathlib
+  reproduce: cd trusted/proofs/aave_arith && lake build
+artifacts:
+- trusted/proofs/aave_arith/AaveArith/Basic.lean
+extra:
+  theorem_name: Erc20.transfer_pair_sum_preserved
+  build_status: ok
+  lean_project: trusted/proofs/aave_arith

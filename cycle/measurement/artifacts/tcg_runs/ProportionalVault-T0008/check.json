@@ -1,0 +1,41 @@
+{
+  "schema": "tcg/check/v1",
+  "contract": "ProportionalVault",
+  "method": "deposit",
+  "phi_hash": "2ec152e0787539847f0b7e9f3ce0731a8d2365fccad44c62a3cd6a72247ff0a0",
+  "phi_hash_reconfirmed": true,
+  "checker_params_used": {
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "engine": "chc",
+    "targets": [
+      "assert"
+    ],
+    "ext_calls": "untrusted",
+    "model_checker_timeout_ms": 20000,
+    "solvers": [
+      "z3"
+    ]
+  },
+  "post_invariant": "totalShares <= totalAssets",
+  "k_result": "unknown",
+  "k_gate_exit": 2,
+  "reason": "verification condition could not be proved (nonlinear arithmetic / over-approximation / timeout — the SMTChecker wall)",
+  "witness": null,
+  "certificate": null,
+  "solver_verdict": "inconclusive",
+  "harness": "cycle/measurement/artifacts/tcg_runs/ProportionalVault-T0008/build/ProportionalVault__harness.sol",
+  "command": [
+    "/opt/homebrew/bin/solc",
+    "--model-checker-engine",
+    "chc",
+    "--model-checker-targets",
+    "assert",
+    "--model-checker-solvers",
+    "z3",
+    "--model-checker-timeout",
+    "20000",
+    "--model-checker-ext-calls",
+    "untrusted",
+    "/Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/ProportionalVault-T0008/build/ProportionalVault__harness.sol"
+  ]
+}

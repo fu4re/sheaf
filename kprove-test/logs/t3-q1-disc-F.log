@@ -1,0 +1,29 @@
+#Top
+[Warning] Compiler: Variable 'B_POST' defined but not used. Prefix variable
+name with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/t3-q1/q1-disc-F-spec.k)
+	Location(15,14,15,20)
+	15 |	    requires B_POST ==Int B_PRE -Int APRIME       // Guar_w^F: reentrant
+frame STILL decrements bal[U] (same as V)
+	   .	             ^~~~~~
+[Warning] Compiler: Variable 'B_PRE' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/t3-q1/q1-disc-F-spec.k)
+	Location(15,27,15,32)
+	15 |	    requires B_POST ==Int B_PRE -Int APRIME       // Guar_w^F: reentrant
+frame STILL decrements bal[U] (same as V)
+	   .	                          ^~~~~
+[Warning] Compiler: Variable 'B_POST' defined but not used. Prefix variable
+name with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/t3-q1/q1-disc-F-spec.k)
+	Location(23,14,23,20)
+	23 |	    requires B_POST ==Int B_PRE -Int APRIME       // Guar_env: env
+reentered withdraw_F -> bal[U] decrement
+	   .	             ^~~~~~
+[Warning] Compiler: Variable 'B_PRE' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/t3-q1/q1-disc-F-spec.k)
+	Location(23,27,23,32)
+	23 |	    requires B_POST ==Int B_PRE -Int APRIME       // Guar_env: env
+reentered withdraw_F -> bal[U] decrement
+	   .	                          ^~~~~

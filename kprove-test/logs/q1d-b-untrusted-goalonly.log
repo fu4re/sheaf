@@ -1,0 +1,2 @@
+[Error] Critical: Only one main parameter allowed but found several:
+"repro/q1d/q1d-b-untrusted.k" and "--claims Q1D-B-UNTRUSTED.goal-b2"

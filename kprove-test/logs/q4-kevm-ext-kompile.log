@@ -1,0 +1,9 @@
+[Error] Critical: Could not find file: plugin/krypto.md
+Lookup
+directories:[/nix/store/l131dddkhs07w6gmrk4xqgbpfvn61x9m-kevm-source/kevm-pyk/src/kevm_pyk/kproj/evm-semantics,
+/nix/store/l131dddkhs07w6gmrk4xqgbpfvn61x9m-kevm-source/kevm-pyk/src/kevm_pyk/kproj/evm-semantics,
+/nix/store/aqjgfc96ra0v1drpil3jlx23frcz5nrb-k-7.1.337-4a46d1231473b599c699160132fd6e76a5c46406/lib/kframework/java/../../../include/kframework/builtin]
+	Source(/nix/store/l131dddkhs07w6gmrk4xqgbpfvn61x9m-kevm-source/kevm-pyk/src/kevm_pyk/kproj/evm-semantics/serialization.md)
+	Location(5,1,5,28)
+	5 |	requires "plugin/krypto.md"
+	  .	^~~~~~~~~~~~~~~~~~~~~~~~~~~

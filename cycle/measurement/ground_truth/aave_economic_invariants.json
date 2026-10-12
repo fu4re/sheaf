@@ -1,0 +1,57 @@
+{
+  "_source": "aave/Aave-Vault @ 5ab52d2 · certora/specs/ · fetched 2026-06-22",
+  "contract": "ATokenVault",
+  "method": "deposit",
+  "note": "Distilled EXPERT economic invariants (all proven in CVL). Ground truth for the spec-generation realism measurement. Functional/rounding props (erc4626.spec) tracked separately.",
+  "economic_invariants": [
+    {
+      "id": "conservation_shares",
+      "law": "sumAllBalance() == totalSupply()",
+      "informal": "no shares minted from air: sum of user balances equals total supply",
+      "atoms": ["totalSupply", "balanceOf", "sum"],
+      "cvl_file": "totalSupply_EQ_sumAllBal.spec"
+    },
+    {
+      "id": "balance_leq_supply",
+      "law": "balanceOf(user) <= totalSupply()",
+      "informal": "no single holder exceeds total supply",
+      "atoms": ["balanceOf", "totalSupply"],
+      "cvl_file": "totalSupply_EQ_sumAllBal.spec"
+    },
+    {
+      "id": "solvency",
+      "law": "totalSupply() != 0 => totalAssets() != 0",
+      "informal": "shares are always backed: no shares without backing assets",
+      "atoms": ["totalSupply", "totalAssets"],
+      "cvl_file": "positiveSupply_imply_positiveAssets.spec"
+    },
+    {
+      "id": "fees_backed",
+      "law": "getClaimableFees() <= ATOKEN.balanceOf(vault)",
+      "informal": "cannot claim more fees than the vault actually holds",
+      "atoms": ["getClaimableFees", "accumulatedFees", "ATOKEN.balanceOf"],
+      "cvl_file": "fees_LEQ_ATokenBal.spec"
+    },
+    {
+      "id": "accounting_leq_real_balance",
+      "law": "getLastVaultBalance() <= ATOKEN.balanceOf(vault)",
+      "informal": "internal accounting never exceeds the real aToken balance",
+      "atoms": ["getLastVaultBalance", "lastVaultBalance", "ATOKEN.balanceOf"],
+      "cvl_file": "lastVaultBal_LEQ_ATokenBalThis.spec"
+    },
+    {
+      "id": "fees_monotonic",
+      "law": "accumulatedFees_after >= accumulatedFees_before",
+      "informal": "accrued fees only increase or stay (no fee value vanishes)",
+      "atoms": ["accumulatedFees", "monotonic"],
+      "cvl_file": "accrueYieldCheck.spec"
+    },
+    {
+      "id": "balance_change_causes_accrual",
+      "law": "aToken/underlying balance change => yield accrual happened",
+      "informal": "yield is not silently lost: any balance change triggers accrual",
+      "atoms": ["accrual", "balance", "lastVaultBalance"],
+      "cvl_file": "changeInContractBalanceShouldCauseAccrual.spec"
+    }
+  ]
+}

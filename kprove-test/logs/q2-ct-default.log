@@ -1,0 +1,11 @@
+kore-exec: [85169] Warning (WarnStuckClaimState):
+    The configuration's term doesn't unify with the destination's term and the configuration cannot be rewritten further. Location: /Users/akkedeline/sheaf/kprove-test/repro/q2-claimtype/ct-bare.k:4:9-4:39
+Context:
+    (InfoReachability) while checking the implication
+kore-exec: [88557] Warning (WarnUnexploredBranches):
+    1 branches were still unexplored when the action failed.
+<k>
+  ctB ~> _DotVar1 ~> .K
+</k>
+[Error] Prover: backend terminated because the configuration cannot be
+rewritten further. See output for more details.

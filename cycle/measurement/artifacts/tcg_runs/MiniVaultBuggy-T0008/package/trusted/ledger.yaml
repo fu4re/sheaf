@@ -1,0 +1,14 @@
+meta: {}
+lean_theorems: []
+assumptions:
+- id: A_solver
+  leaf_class: irreducible
+  status: assumed
+  statement_human: The solver's refuting witness is a real reachable counterexample.
+  statement_formal: trust(solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled)
+    targets=['assert']) for the counterexample
+  why_assumed: ADR Assumption 3 — the refutation is the solver's; the witness is retained
+    and re-checkable.
+  risk_if_false: A solver bug could surface a spurious counterexample; mitigated by
+    the concrete witness which --replay re-derives.
+harness_faithfulness: []

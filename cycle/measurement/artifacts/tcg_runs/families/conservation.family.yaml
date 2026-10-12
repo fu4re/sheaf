@@ -1,0 +1,25 @@
+schema: tcg/vacuity_family/v1
+name: conservation
+# A reachable-state invariant (Σ balanceOf shadow == totalSupply), checked in a view over
+# all reachable states ⇒ CHC-only (BMC yields spurious free-state counterexamples).
+# This family re-discovers the conservation≠delta gap: conservation PROVES on the burning-fee
+# callee (a blind spot) while the delta family refutes it (Finding 0005).
+invariant: "ghostSum == totalSupply"
+engines: [chc]
+# templates are relative to the cycle/ root
+reach_target:
+  template: trusted/harness/cross/MiniERC20Conservation.sol
+  contract: MiniERC20Conservation
+members:
+  honest:MiniERC20:
+    template: trusted/harness/cross/MiniERC20Conservation.sol
+    contract: MiniERC20Conservation
+  adv:SupplyInflation:
+    template: trusted/harness/cross/MiniERC20ConservationBuggy.sol
+    contract: MiniERC20ConservationBuggy
+  adv:LosingFee:
+    template: trusted/harness/cross/FeeERC20Conservation.sol
+    contract: FeeERC20Conservation
+  adv:BurnFee:
+    template: trusted/harness/cross/BurnFeeERC20Conservation.sol
+    contract: BurnFeeERC20Conservation

@@ -1,0 +1,17 @@
+record_id: R_caller
+kind: smt_solve
+produced_by:
+  component: smtchecker
+  via: orchestrator.py cross-template
+subject:
+  human: 'the vault holds at least what it accounts for: balanceOf(vault) >= totalAssets'
+  formal: vaultBal >= totalAssets
+  shape: quantified-over-mapping
+result:
+  verdict: proven
+  engine: solc 0.8.35 chc z3
+  reproduce: solc --model-checker-engine chc --model-checker-targets assert --model-checker-solvers
+    z3 --model-checker-timeout 20000 <harness>
+  raw_ref: measurement/artifacts/VaultAssetAG__verdict.json
+artifacts:
+- measurement/artifacts/build/VaultAssetAG__cross.sol

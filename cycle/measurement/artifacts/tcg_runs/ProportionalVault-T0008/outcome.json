@@ -1,0 +1,33 @@
+{
+  "schema": "tcg/outcome/v1",
+  "stage": "check",
+  "contract": "ProportionalVault",
+  "method": "deposit",
+  "k_result": "unknown",
+  "k_gate_exit": 2,
+  "terminal": "⊥_gen",
+  "terminal_exit": 5,
+  "process_exit": 2,
+  "verified": false,
+  "witness": null,
+  "phi_checked": [
+    "pre",
+    "post"
+  ],
+  "phi_context": [
+    "trace-deep",
+    "exit-safety",
+    "exit-outofgas"
+  ],
+  "bytecode_identity": "unverified",
+  "label": "⊥_gen",
+  "exit_code": 5,
+  "reasons": [
+    "K Unknown (rejection, Inv.4) — verification condition could not be proved (nonlinear arithmetic / over-approximation / timeout — the SMTChecker wall)"
+  ],
+  "open_dischargeable": [],
+  "assumed_irreducible": [],
+  "pending_gates": [],
+  "claim_scope": "none (unknown)",
+  "note": "check exits the K-gate code (refute=3 / unknown=2 / accept-ceiling=6); for a refute/unknown, `tcg run` emits the ⊥_gen loop terminal (exit 5). Pending gates (vacuity, lint) can only constrain further, never relax."
+}

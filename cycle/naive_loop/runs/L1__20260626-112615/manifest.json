@@ -1,0 +1,41 @@
+[
+  {
+    "file": "inv_conservation_1to1.sol",
+    "name": "conservation_1to1",
+    "informal": "totalShares == totalAssets — no value minted from air",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "CHC proved 3 VCs safe (deposit, withdraw, check). Vacuity confirmed: mutated assert(totalShares != totalAssets) produces counterexample."
+  },
+  {
+    "file": "inv_solvency_price_geq_1.sol",
+    "name": "solvency_price_geq_1",
+    "informal": "totalAssets >= totalShares — every share backed by >= 1 asset unit",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "CHC proved 3 VCs safe. Vacuity confirmed: mutated assert(totalAssets < totalShares) produces counterexample."
+  },
+  {
+    "file": "inv_no_orphan_shares.sol",
+    "name": "no_orphan_shares",
+    "informal": "totalShares == 0 <=> totalAssets == 0 — no shares without backing and vice versa",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "CHC proved 3 VCs safe. Vacuity confirmed: mutated assert with != produces counterexample."
+  }
+]

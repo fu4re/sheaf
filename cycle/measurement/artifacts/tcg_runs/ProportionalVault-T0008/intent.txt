@@ -1,0 +1,1 @@
+share price >= 1: every share is backed by at least one asset unit (no dilution)

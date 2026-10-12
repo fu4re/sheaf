@@ -1,0 +1,16 @@
+{
+  "schema": "tcg/vacuity/v1",
+  "verdict": "FLAG",
+  "mode": "no_family",
+  "probe_R": {
+    "probe": "R",
+    "solver_verdict": "proved",
+    "result": "FLAG",
+    "reachable": false,
+    "vacuous": true,
+    "reason": "unreachable point — assert(false) PROVED ⇒ vacuous"
+  },
+  "probe_M": "not assessed — no --family (load-bearing dimension)",
+  "family_gate": null,
+  "judge": "solver (SMTChecker — CHC for Probe R; per-family engines for Probe M, z3) — zero LLM"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "tcg/vacuity/v1",
+  "verdict": "M_UNASSESSED",
+  "mode": "no_family",
+  "probe_R": {
+    "probe": "R",
+    "solver_verdict": "counterexample",
+    "result": "PASS",
+    "reachable": true,
+    "vacuous": false
+  },
+  "probe_M": "not assessed — no --family (load-bearing dimension)",
+  "family_gate": null,
+  "judge": "solver (SMTChecker — CHC for Probe R; per-family engines for Probe M, z3) — zero LLM"
+}

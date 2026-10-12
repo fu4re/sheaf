@@ -1,0 +1,310 @@
+===== BASELINE (no cse) Wed Jul 15 16:05:26 MSK 2026 =====
+🏃 Running Kontrol proofs 🏃 
+ Add `--verbose` to `kontrol prove` for more details!
+Selected functions: test%CoverageTest.test_coverage_miss(uint256)
+Running setup functions in parallel: test%CoverageTest.setUp()
+test%CoverageTes… PASSED: 4 nodes: 0 pending|1 passed|0 failing|0 vacuous|0 ref…
+Running test functions in parallel: 
+test%CoverageTest.test_coverage_miss(uint256)
+WARNING 2026-07-15 16:06:17,973 pyk.proof.proof - Terminating proof early because fail_fast is set: test%CoverageTest.test_coverage_miss(uint256):0
+test%CoverageTest.test_covera… FAILED: 11 nodes: 0 pending|1 passed|1 failing|0…
+❌ PROOF FAILED ❌ test%CoverageTest.test_coverage_miss(uint256):0
+⏳ Time: 34s ⏳
+1 Failure nodes. (0 pending and 1 failing)
+
+Failing nodes:
+
+  Node id: 13
+  Status Code:
+    EVMC_REVERT
+  Output:
+    Assertion failed - assert() condition was false
+  Path condition:
+    { true == x <=Int 10 }
+  Model:
+    x = 0
+    block.prevrandao = 0
+    block.number = 16777217
+    block.timestamp = 1073741825
+
+Join the Runtime Verification communities for support:
+    telegram: https://t.me/rv_kontrol
+    discord:  https://discord.gg/CurfmXNtbN
+
+Access documentation for Kontrol at https://docs.runtimeverification.com/kontrol
+baseline exit=1
+===== CSE Wed Jul 15 16:06:26 MSK 2026 =====
+🏃 Running Kontrol proofs 🏃 
+ Add `--verbose` to `kontrol prove` for more details!
+Selected functions: src%B.f(uint256)
+Running setup functions in parallel: 
+
+Running test functions in parallel: src%B.f(uint256)
+src%B.f(ui… … PASSED: 3 nodes: 0 pending|1 passed|0 failing|0 vacuous|0 refuted…
+Selected functions: test%CoverageTest.test_coverage_miss(uint256)
+Running setup functions in parallel: test%CoverageTest.setUp()
+ERROR 2026-07-15 16:10:42,292 kevm_pyk.utils - Proof crashed: test%CoverageTest.setUp():1
+Runtime error | code: -32002 | data: SMT problem: Unexpected result while calling 'check-sat': Error "line 1 column 23276: Sorts SortAccount and Int are incompatible"
+Traceback (most recent call last):
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 1070, in _request
+    return self._client.request(method, **params)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 287, in request
+    response = self._default_client.request(method, **params)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 388, in request
+    self._check(data)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 399, in _check
+    raise JsonRpcError(**response['error'])
+pyk.kore.rpc.JsonRpcError: Runtime error
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/kevm_pyk/utils.py", line 165, in run_prover
+    parallel_advance_proof(
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/proof/proof.py", line 380, in parallel_advance_proof
+    proof_results = future.result()
+  File "/nix/store/3diglh51dp3wbayycz40wixk145i03w2-python3-3.10.14/lib/python3.10/concurrent/futures/_base.py", line 451, in result
+    return self.__get_result()
+  File "/nix/store/3diglh51dp3wbayycz40wixk145i03w2-python3-3.10.14/lib/python3.10/concurrent/futures/_base.py", line 403, in __get_result
+    raise self._exception
+  File "/nix/store/3diglh51dp3wbayycz40wixk145i03w2-python3-3.10.14/lib/python3.10/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/proof/proof.py", line 459, in step
+    return prover.step_proof(proof_step)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/proof/reachability.py", line 903, in step_proof
+    extend_results = self.kcfg_explore.extend_cterm(
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kcfg/explore.py", line 236, in extend_cterm
+    cterm, next_states, depth, vacuous, next_node_logs = self.cterm_symbolic.execute(
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/cterm/symbolic.py", line 174, in execute
+    response = self._kore_client.execute(
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 1135, in execute
+    result = self._request('execute', **params)
+  File "/nix/store/sibjxwbgqs21gyyrjbv1cb9md5hcnhss-kontrol-pyk-env/lib/python3.10/site-packages/pyk/kore/rpc.py", line 1072, in _request
+    raise self._error(err) from err
+pyk.kore.rpc.DefaultError: Runtime error | code: -32002 | data: SMT problem: Unexpected result while calling 'check-sat': Error "line 1 column 23276: Sorts SortAccount and Int are incompatible"
+test%CoverageTe… PENDING: 48 nodes: 21 pending|0 passed|0 failing|0 vacuous|0 r…
+Running setUp method failed for 1 contracts: test%CoverageTest
+cse exit=1
+===== B.f SUMMARY as module (shows requires guard) Wed Jul 15 16:10:43 MSK 2026 =====
+
+┌─ 1 (root, init)
+│   k: #execute ~> CONTINUATION:K ~> .K
+│   pc: 0
+│   callDepth: CALLDEPTH_CELL:Int
+│   statusCode: STATUSCODE:StatusCode
+│   src: src/Coverage.sol:4:9
+│   method: src%B.f(uint256)
+│
+│  (768 steps)
+├─ 3 (terminal)
+│   k: #halt ~> CONTINUATION:K ~> .K
+│   pc: 83
+│   callDepth: CALLDEPTH_CELL:Int
+│   statusCode: EVMC_SUCCESS
+│   src: src/Coverage.sol:6:8
+│   method: src%B.f(uint256)
+│
+┊  constraint:
+┊      ( notBool <acctID>
+  C_B_ID:Int
+</acctID> in_keys ( ACCOUNTS_REST:AccountCellMap ) )
+┊  subst: ...
+└─ 2 (leaf, target, terminal)
+    k: #halt ~> CONTINUATION:K ~> .K
+    pc: PC_CELL_5d410f2a:Int
+    callDepth: CALLDEPTH_CELL_5d410f2a:Int
+    statusCode: STATUSCODE_FINAL:StatusCode
+
+
+
+
+module SUMMARY-SRC%B.F(UINT256):0
+    
+    
+    rule [BASIC-BLOCK-1-TO-3]: <foundry>
+           <kevm>
+             <k>
+               ( #execute => #halt )
+               ~> _CONTINUATION:K
+               ~> .K
+             </k>
+             <mode>
+               NORMAL
+             </mode>
+             <schedule>
+               CANCUN
+             </schedule>
+             <useGas>
+               false
+             </useGas>
+             <ethereum>
+               <evm>
+                 <output>
+                   ( _OUTPUT_CELL:Bytes => #buf ( 32 , KV0_x:Int ) )
+                 </output>
+                 <statusCode>
+                   ( _STATUSCODE:StatusCode => EVMC_SUCCESS )
+                 </statusCode>
+                 <callState>
+                   <program>
+                     b"`\x80`@R4\x80\x15`\x0eW__\xfd[P`\x046\x10`&W_5`\xe0\x1c\x80c\xb3\xded\x8b\x14`*W[__\xfd[`@`\x04\x806\x03\x81\x01\x90`<\x91\x90`\x8fV[`TV[`@Q`K\x91\x90`\xc2V[`@Q\x80\x91\x03\x90\xf3[_\x81\x90P\x91\x90PV[__\xfd[_\x81\x90P\x91\x90PV[`q\x81`aV[\x81\x14`zW__\xfd[PV[_\x815\x90P`\x89\x81`jV[\x92\x91PPV[_` \x82\x84\x03\x12\x15`\xa1W`\xa0`]V[[_`\xac\x84\x82\x85\x01`}V[\x91PP\x92\x91PPV[`\xbc\x81`aV[\x82RPPV[_` \x82\x01\x90P`\xd3_\x83\x01\x84`\xb5V[\x92\x91PPV\xfe\xa2dipfsX\"\x12 \xecm\x93\x9f\xd3,\xdf\xce\xd8\x1b{y\xbf\xaa\xaa\x1cd\xbfi\xcf\x01\xdd\xc5r\xf0\xe2]px\xde$mdsolcC\x00\x08#\x003"
+                   </program>
+                   <jumpDests>
+                     b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00"
+                   </jumpDests>
+                   <id>
+                     C_B_ID:Int
+                   </id>
+                   <caller>
+                     CALLER_ID:Int
+                   </caller>
+                   <callData>
+                     b"\xb3\xded\x8b" +Bytes #buf ( 32 , KV0_x:Int )
+                   </callData>
+                   <callValue>
+                     0
+                   </callValue>
+                   <wordStack>
+                     ( .WordStack => ( 3017696395 : .WordStack ) )
+                   </wordStack>
+                   <localMem>
+                     ( b"" => b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00" +Bytes #buf ( 32 , KV0_x:Int ) )
+                   </localMem>
+                   <pc>
+                     ( 0 => 83 )
+                   </pc>
+                   <gas>
+                     0
+                   </gas>
+                   <memoryUsed>
+                     0
+                   </memoryUsed>
+                   <callGas>
+                     0
+                   </callGas>
+                   <codeAddr>
+                     C_B_ID:Int
+                   </codeAddr>
+                   ...
+                 </callState>
+                 <substate>
+                   <refund>
+                     0
+                   </refund>
+                   ...
+                 </substate>
+                 <origin>
+                   ORIGIN_ID:Int
+                 </origin>
+                 <block>
+                   <number>
+                     NUMBER_CELL:Int
+                   </number>
+                   <timestamp>
+                     TIMESTAMP_CELL:Int
+                   </timestamp>
+                   <mixHash>
+                     MIXHASH_CELL:Int
+                   </mixHash>
+                   ...
+                 </block>
+                 ...
+               </evm>
+               <network>
+                 <chainID>
+                   1
+                 </chainID>
+                 <accounts>
+                   ( <account>
+                     <acctID>
+                       C_B_ID:Int
+                     </acctID>
+                     <balance>
+                       C_B_BAL:Int
+                     </balance>
+                     <code>
+                       b"`\x80`@R4\x80\x15`\x0eW__\xfd[P`\x046\x10`&W_5`\xe0\x1c\x80c\xb3\xded\x8b\x14`*W[__\xfd[`@`\x04\x806\x03\x81\x01\x90`<\x91\x90`\x8fV[`TV[`@Q`K\x91\x90`\xc2V[`@Q\x80\x91\x03\x90\xf3[_\x81\x90P\x91\x90PV[__\xfd[_\x81\x90P\x91\x90PV[`q\x81`aV[\x81\x14`zW__\xfd[PV[_\x815\x90P`\x89\x81`jV[\x92\x91PPV[_` \x82\x84\x03\x12\x15`\xa1W`\xa0`]V[[_`\xac\x84\x82\x85\x01`}V[\x91PP\x92\x91PPV[`\xbc\x81`aV[\x82RPPV[_` \x82\x01\x90P`\xd3_\x83\x01\x84`\xb5V[\x92\x91PPV\xfe\xa2dipfsX\"\x12 \xecm\x93\x9f\xd3,\xdf\xce\xd8\x1b{y\xbf\xaa\xaa\x1cd\xbfi\xcf\x01\xdd\xc5r\xf0\xe2]px\xde$mdsolcC\x00\x08#\x003"
+                     </code>
+                     <nonce>
+                       C_B_NONCE:Int
+                     </nonce>
+                     ...
+                   </account>
+                   ACCOUNTS_REST:AccountCellMap )
+                 </accounts>
+                 ...
+               </network>
+             </ethereum>
+             ...
+           </kevm>
+           <stackChecks>
+             true
+           </stackChecks>
+           <cheatcodes>
+             <expectedOpcode>
+               <isOpcodeExpected>
+                 false
+               </isOpcodeExpected>
+               ...
+             </expectedOpcode>
+             <whitelist>
+               <isCallWhitelistActive>
+                 false
+               </isCallWhitelistActive>
+               <allowedCallsList>
+                 .List
+               </allowedCallsList>
+               <isStorageWhitelistActive>
+                 false
+               </isStorageWhitelistActive>
+               <storageSlotList>
+                 .List
+               </storageSlotList>
+             </whitelist>
+             <mockCalls>
+               .MockCallCellMap
+             </mockCalls>
+             <mockFunctions>
+               .MockFunctionCellMap
+             </mockFunctions>
+             ...
+           </cheatcodes>
+         </foundry>
+      requires ( 0 <=Int KV0_x:Int
+       andBool ( 10 <Int KV0_x:Int
+       andBool ( 0 <=Int C_B_ID:Int
+       andBool ( 0 <=Int C_B_BAL:Int
+       andBool ( 0 <=Int CALLER_ID:Int
+       andBool ( 0 <=Int C_B_NONCE:Int
+       andBool ( 0 <=Int ORIGIN_ID:Int
+       andBool ( 0 <=Int MIXHASH_CELL:Int
+       andBool ( pow24 <Int NUMBER_CELL:Int
+       andBool ( NUMBER_CELL:Int <Int pow32
+       andBool ( 1073741824 <Int TIMESTAMP_CELL:Int
+       andBool ( TIMESTAMP_CELL:Int <Int 34359738368
+       andBool ( C_B_NONCE:Int <Int maxUInt64
+       andBool ( C_B_ID:Int =/=Int #address ( FoundryCheat )
+       andBool ( CALLER_ID:Int =/=Int #address ( FoundryCheat )
+       andBool ( ORIGIN_ID:Int =/=Int #address ( FoundryCheat )
+       andBool ( C_B_ID:Int <Int pow160
+       andBool ( CALLER_ID:Int <Int pow160
+       andBool ( ORIGIN_ID:Int <Int pow160
+       andBool ( KV0_x:Int <Int pow256
+       andBool ( C_B_BAL:Int <Int pow256
+       andBool ( MIXHASH_CELL:Int <Int pow256
+       andBool ( ( notBool <acctID>
+          C_B_ID:Int
+        </acctID> in_keys ( ACCOUNTS_REST:AccountCellMap ) )
+       andBool ( ( C_B_ID:Int <=Int 0
+          orBool ( 10 <Int C_B_ID:Int
+                 ))
+       andBool ( ( CALLER_ID:Int <=Int 0
+          orBool ( 10 <Int CALLER_ID:Int
+                 ))
+       andBool ( ( ORIGIN_ID:Int <=Int 0
+          orBool ( 10 <Int ORIGIN_ID:Int
+                 ))
+               ))))))))))))))))))))))))))
+      [priority(20), label(BASIC-BLOCK-1-TO-3)]
+
+endmodule

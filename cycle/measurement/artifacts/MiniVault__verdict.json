@@ -1,0 +1,54 @@
+{
+  "contract": "MiniVault",
+  "method": "deposit",
+  "spec_source": "replay:MiniVault__spec.seed.json",
+  "invariant": {
+    "name": "shares_backed_by_assets",
+    "solidity_expr": "totalShares == totalAssets",
+    "kind": "contract_invariant",
+    "informal": "every share is backed by an asset unit; no value minted from air"
+  },
+  "gateway": {
+    "mode": "subclass",
+    "harness": "measurement/artifacts/build/MiniVault__harness.sol",
+    "compiles": true
+  },
+  "verdict": {
+    "verdict": "proved",
+    "witness": null,
+    "reason": null,
+    "engine": "chc",
+    "solvers": [
+      "z3"
+    ],
+    "targets": [
+      "assert"
+    ],
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "command": [
+      "/opt/homebrew/bin/solc",
+      "--model-checker-engine",
+      "chc",
+      "--model-checker-targets",
+      "assert",
+      "--model-checker-solvers",
+      "z3",
+      "--model-checker-timeout",
+      "0",
+      "/Users/akkedeline/sheaf/cycle/measurement/artifacts/build/MiniVault__harness.sol"
+    ],
+    "duration_s": 0.084,
+    "raw": "Info: CHC: 1 verification condition(s) proved safe! Enable the model checker option \"show proved safe\" to see all of them."
+  },
+  "ground_truth_delta": {
+    "match": "exact",
+    "proposed_expr": "totalShares == totalAssets",
+    "canonical_expr": "totalShares == totalAssets",
+    "proposed_normalized": "totalAssets==totalShares",
+    "canonical_normalized": "totalAssets==totalShares"
+  },
+  "provenance": {
+    "backend": "seed",
+    "model_requested": "none"
+  }
+}

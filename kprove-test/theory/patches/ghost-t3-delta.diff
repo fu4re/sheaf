@@ -1,0 +1,88 @@
+--- a/evm.md
++++ b/evm.md
+@@ -40,6 +40,8 @@
+         <useGas> $USEGAS:Bool </useGas>
+ 
+         <callCounter> 0 </callCounter>   // GHOST: user-call frame counter (outside <ethereum>, survives revert)
++        <inFunc> .Map </inFunc>          // GHOST (T3): Map(FuncSig4 -> active frames in C); reentered(sig) := inFunc[sig] >=Int 2
++        <monitoredAddr> 0 </monitoredAddr> // GHOST (T3): the contract C whose frames <inFunc> tracks (set by the claim)
+ 
+         <ethereum>
+ 
+@@ -288,6 +290,34 @@
+     syntax InternalOp ::= "#dropWorldState"
+  // ---------------------------------------
+     rule <k> #dropWorldState => .K ... </k> <interimStates> ListItem(_) REST => REST </interimStates>
++```
++
++### Ghost monitor helpers (T3, `<inFunc>`)
++
++Additive, total functions used only by the ghost-cell updates below; they never
++appear in the LHS of a stock rule, so stock-rule applicability is unchanged (A5).
++
++-   `#selKey(ARGS)` — the 4-byte ABI selector of a frame's calldata as an `Int`
++    (`#range` zero-pads, so empty calldata / a bare fallback maps to key `0`).
++-   `#ifGet(M, K)` — active-frame count for selector `K` (0 if absent).
++-   `#bump(M, A, MON, SIG, D)` — add `D` to `M[SIG]` **iff** `A == MON` (the frame's
++    account is the monitored contract C); identity otherwise. This is the `callee == C`
++    guard (K4) expressed without adding a `requires` to the stock junction rule.
++
++```k
++    syntax Int ::= #selKey(Bytes) [function, total]
++ // -----------------------------------------------
++    rule #selKey(ARGS) => #asWord(#range(ARGS, 0, 4))
++
++    syntax Int ::= #ifGet(Map, Int) [function, total]
++ // -------------------------------------------------
++    rule #ifGet(M, K) => {M[K]}:>Int requires K in_keys(M)
++    rule #ifGet(M, K) => 0           requires notBool K in_keys(M)
++
++    syntax Map ::= #bump(Map, Int, Int, Int, Int) [function, total]
++ // --------------------------------------------------------------
++    rule #bump(M, A, MON, SIG, D) => M [ SIG <- #ifGet(M, SIG) +Int D ] requires A ==Int MON
++    rule #bump(M, A, MON, _,   _) => M                                  requires A =/=Int MON
+ ```
+ 
+ Control Flow
+@@ -1682,6 +1712,8 @@
+          <useGas> USEGAS:Bool </useGas>
+          <callDepth> CD => CD +Int 1 </callDepth>
+          <callCounter> CC => CC +Int 1 </callCounter>   // GHOST: +1 per message-call frame (CALL/CALLCODE/DELEGATECALL/STATICCALL)
++         <inFunc> IF => #bump(IF, ACCTTO, MADDR, #selKey(ARGS), 1) </inFunc>   // GHOST (T3): +1 iff callee==C; key = selector of THIS frame's calldata (ARGS)
++         <monitoredAddr> MADDR </monitoredAddr>
+          <callData> _ => ARGS </callData>
+          <callValue> _ => APPVALUE </callValue>
+          <id> _ => ACCTTO </id>
+@@ -1830,6 +1862,10 @@
+          ...
+          </k>
+          <output> _ => .Bytes </output>
++         <id> CID </id>                                                           // GHOST (T3): finishing frame, read BEFORE #popCallStack
++         <callData> CALLDATA </callData>                                          // GHOST (T3): still THIS frame's calldata (pre-pop)
++         <monitoredAddr> MADDR </monitoredAddr>
++         <inFunc> IF => #bump(IF, CID, MADDR, #selKey(CALLDATA), -1) </inFunc>      // GHOST (T3): -1 iff finishing frame is a C-frame
+ 
+     rule [return.revert]:
+          <statusCode> EVMC_REVERT </statusCode>
+@@ -1840,6 +1876,10 @@
+          </k>
+          <output> OUT </output>
+          <gas> GAVAIL </gas>
++         <id> CID </id>                                                           // GHOST (T3): finishing frame, read BEFORE #popCallStack
++         <callData> CALLDATA </callData>                                          // GHOST (T3): still THIS frame's calldata (pre-pop)
++         <monitoredAddr> MADDR </monitoredAddr>
++         <inFunc> IF => #bump(IF, CID, MADDR, #selKey(CALLDATA), -1) </inFunc>      // GHOST (T3): -1 on revert exit (mirrors <callCounter> NOT rolling back; INV_inFunc is stack-tied so it MUST decrement)
+ 
+     rule [return.success]:
+          <statusCode> EVMC_SUCCESS </statusCode>
+@@ -1850,6 +1890,10 @@
+          </k>
+          <output> OUT </output>
+          <gas> GAVAIL </gas>
++         <id> CID </id>                                                           // GHOST (T3): finishing frame, read BEFORE #popCallStack
++         <callData> CALLDATA </callData>                                          // GHOST (T3): still THIS frame's calldata (pre-pop)
++         <monitoredAddr> MADDR </monitoredAddr>
++         <inFunc> IF => #bump(IF, CID, MADDR, #selKey(CALLDATA), -1) </inFunc>      // GHOST (T3): -1 on normal exit
+ 
+     syntax InternalOp ::= "#refund" Gas
+                         | "#setLocalMem" Int Int Bytes

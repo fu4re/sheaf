@@ -1,0 +1,19 @@
+{
+  "module": "cross_contract_spec_generator",
+  "contract": "VaultAsset",
+  "method": "deposit",
+  "invariant": {
+    "name": "cross_solvency",
+    "solidity_expr": "vaultBal >= totalAssets",
+    "kind": "cross_contract_invariant",
+    "informal": "the vault holds at least what it accounts for: balanceOf(vault) >= totalAssets"
+  },
+  "summary_clauses": [
+    "vaultBal_post == vaultBal + assets",
+    "vaultBal_post == vaultBal - assets"
+  ],
+  "state_vars_referenced": ["vaultBal", "totalAssets"],
+  "callee": "MiniERC20",
+  "assumed_guarantee_informal": "deposit: transferFrom credits the vault by exactly `assets`; withdraw: transfer debits by exactly `assets`; underlying conservation: sum of ERC20 balances == totalSupply",
+  "_provenance": {"backend": "seed (deterministic replay)", "model_requested": "n/a", "note": "stands in for module [1] over-generation; the solver triages in cross_triage_demo.py"}
+}

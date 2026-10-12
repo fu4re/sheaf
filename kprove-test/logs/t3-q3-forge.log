@@ -1,0 +1,10 @@
+Compiling 1 files with Solc 0.8.35
+Solc 0.8.35 finished in 34.52ms
+Compiler run successful!
+
+Ran 2 tests for test/Reentrancy.t.sol:ReentrancyTest
+[PASS] test_F_safe() (gas: 524297)
+[PASS] test_V_drains() (gas: 531611)
+Suite result: ok. 2 passed; 0 failed; 0 skipped; finished in 16.26ms (4.17ms CPU time)
+
+Ran 1 test suite in 197.57ms (16.26ms CPU time): 2 tests passed, 0 failed, 0 skipped (2 total tests)

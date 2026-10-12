@@ -1,0 +1,14 @@
+{
+  "module": "economic_spec_generator",
+  "contract": "MiniVaultBuggy",
+  "method": "deposit",
+  "invariant": {
+    "name": "shares_backed_by_assets",
+    "solidity_expr": "totalShares == totalAssets",
+    "kind": "contract_invariant",
+    "informal": "every share is backed by an asset unit; no value minted from air"
+  },
+  "state_vars_referenced": ["totalShares", "totalAssets"],
+  "rationale": "seed spec for deterministic replay; the buggy SUT must violate this",
+  "_provenance": {"backend": "seed", "model_requested": "none"}
+}

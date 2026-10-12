@@ -1,0 +1,44 @@
+{
+  "schema": "tcg/outcome/v1",
+  "stage": "check",
+  "contract": "MiniVault",
+  "method": "deposit",
+  "k_result": "accept",
+  "k_gate_exit": null,
+  "terminal": "⊥_assumptions_open",
+  "terminal_exit": 6,
+  "process_exit": 6,
+  "verified": false,
+  "witness": null,
+  "phi_checked": [
+    "pre",
+    "post"
+  ],
+  "phi_context": [
+    "trace-deep",
+    "exit-safety",
+    "exit-outofgas"
+  ],
+  "bytecode_identity": "unverified",
+  "reasons": [
+    "open DISCHARGEABLE: H_bytecode — Inv.7 — deployed runtime bytecode is bit-identical to the verified source (is 'unverified')",
+    "open DISCHARGEABLE: phi_context — deferred φ dimensions ['trace-deep', 'exit-safety', 'exit-outofgas'] not mechanically discharged",
+    "pending gate: vacuity not yet run — can only constrain further, never relax",
+    "pending gate: lint not yet run — can only constrain further, never relax"
+  ],
+  "open_dischargeable": [
+    "H_bytecode",
+    "phi_context"
+  ],
+  "assumed_irreducible": [
+    "A_machine_semantics",
+    "A_solver",
+    "A_human_intent"
+  ],
+  "pending_gates": [
+    "vacuity",
+    "lint"
+  ],
+  "claim_scope": "φ_checked=['pre', 'post'] (open assumptions named; NOT a verified claim)",
+  "note": "check exits the K-gate code (refute=3 / unknown=2 / accept-ceiling=6); for a refute/unknown, `tcg run` emits the ⊥_gen loop terminal (exit 5). Pending gates (vacuity, lint) can only constrain further, never relax."
+}

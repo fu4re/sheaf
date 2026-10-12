@@ -1,0 +1,53 @@
+meta:
+  contract: MiniVault
+  method: deposit
+  date: '2026-07-03'
+  task: tcg assurance package (T2)
+  phi_hash: 518d5504343d6cada615eb73471a54a7245917d25418045993e269cf3d402c90
+  assurance_level: ⊥_assumptions_open
+  claim_scope: φ_checked=['pre', 'post'] (open assumptions named; NOT a verified claim)
+  note: Source-level run. A proven Post over an OPEN dischargeable leaf (H_bytecode
+    / phi_context) is NOT green — see render-rule.
+claims:
+- id: C1
+  human: every share is backed by an asset unit; no value minted from air
+  formal: totalShares == totalAssets
+  shape: stateless
+  verdict: proven
+  engine: solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled) targets=['assert']
+  evidence:
+    smt_query: evidence/smt/C1__MiniVault__harness.sol
+    reproduce: /opt/homebrew/bin/solc --model-checker-engine chc --model-checker-targets
+      assert --model-checker-solvers z3 --model-checker-timeout 20000 --model-checker-ext-calls
+      untrusted /Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVault-RUN/build/MiniVault__harness.sol
+  depends_on:
+  - kind: lean_theorem
+    ref: L_mulDiv_le_when_y_le_denom
+    status: proven
+    human: y ≤ d → mulDiv x y d ≤ x
+  - kind: lean_theorem
+    ref: L_rayMul_bounds
+    status: proven
+    human: rayMul(x,index)=floor(x*index/RAY) is bounded below by x when index>=RAY
+      and above by 2x when index<=2*RAY — exactly the fixed-point bounds Aave's Certora
+      specs postulate.
+  - kind: assumption
+    ref: A_solver
+    status: assumed
+    human: the SMT proof is trusted (z3/SMTChecker), not re-checked by a Lean kernel
+  - kind: assumption
+    ref: A_machine_semantics
+    status: assumed
+    human: SMTChecker's EVM model is faithful to the real EVM (source-level)
+  - kind: assumption
+    ref: A_human_intent
+    status: assumed
+    human: H attests φ captures the intended economic property
+  - kind: assumption
+    ref: phi_context
+    status: assumed
+    human: deferred φ dimensions are not discharged — claim covers only φ_checked
+  - kind: harness_faithfulness
+    ref: H_bytecode
+    status: assumed
+    human: the verified source equals the deployed bytecode (UNVERIFIED — Inv.7)

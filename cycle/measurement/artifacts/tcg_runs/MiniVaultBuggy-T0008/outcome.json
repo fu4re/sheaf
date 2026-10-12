@@ -1,0 +1,44 @@
+{
+  "schema": "tcg/outcome/v1",
+  "stage": "check",
+  "contract": "MiniVaultBuggy",
+  "method": "deposit",
+  "k_result": "refute",
+  "k_gate_exit": 3,
+  "terminal": "⊥_gen",
+  "terminal_exit": 5,
+  "process_exit": 3,
+  "verified": false,
+  "witness": {
+    "assignments": {
+      "totalAssets": "0",
+      "totalShares": "1"
+    },
+    "transaction_trace": [
+      "__Harness.constructor()",
+      "State: totalAssets = 0, totalShares = 0",
+      "MiniVaultBuggy.deposit(0)",
+      "State: totalAssets = 0, totalShares = 1",
+      "__Harness.__check_invariant()",
+      "26 |         assert(totalShares == totalAssets);"
+    ]
+  },
+  "phi_checked": [
+    "pre",
+    "post"
+  ],
+  "phi_context": [
+    "trace-deep",
+    "exit-safety",
+    "exit-outofgas"
+  ],
+  "bytecode_identity": "unverified",
+  "reasons": [
+    "K refuted φ_post with a witness — solver found a concrete counterexample"
+  ],
+  "open_dischargeable": [],
+  "assumed_irreducible": [],
+  "pending_gates": [],
+  "claim_scope": "none (refuted)",
+  "note": "check exits the K-gate code (refute=3 / unknown=2 / accept-ceiling=6); for a refute/unknown, `tcg run` emits the ⊥_gen loop terminal (exit 5). Pending gates (vacuity, lint) can only constrain further, never relax."
+}

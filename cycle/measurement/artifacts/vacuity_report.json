@@ -1,0 +1,404 @@
+{
+  "task": "T1_vacuity_gate",
+  "layer": "trusted measurement layer next to the solver (NOT the agent)",
+  "acceptance": {
+    "passed": true,
+    "checks": {
+      "both fixtures FLAG (Probe R)": true,
+      "honest+conservation live reachable (PASS)": true,
+      "conservation gate FLAG, blind=[BurnFee]": true,
+      "delta gate PASS, no blind": true,
+      "honest proves on both families": true,
+      "gap auto-rediscovered": true,
+      "delta M2 has load_bearing AND inert": true,
+      "BMC spurious confirmed (CHC=proved, BMC=counterexample)": true
+    }
+  },
+  "engine_policy_evidence": {
+    "harness": "MiniERC20Conservation (honest)",
+    "invariant": "ghostSum == totalSupply",
+    "CHC": "proved",
+    "BMC": "counterexample",
+    "BMC_witness": {
+      "assignments": {
+        "amount": "0",
+        "from": "0",
+        "ghostSum": "1",
+        "to": "0",
+        "totalSupply": "0"
+      },
+      "transaction_trace": []
+    },
+    "BMC_reason": null,
+    "reading": "CHC=proved (sound) vs BMC=counterexample (SPURIOUS — free state unreachable from constructor) ⇒ BMC unsound on a reachable-state invariant"
+  },
+  "probe_R": {
+    "policy": "CHC-only (BMC gives spurious violations on unreachable points — measured)",
+    "fixtures_expected_FLAG": {
+      "VaultAssetAGDead (require(false))": "FLAG",
+      "MiniERC20NoMintConservation (dead underflow)": "FLAG"
+    },
+    "live_expected_PASS": {
+      "MiniERC20Conservation": "PASS",
+      "MiniERC20ConservationBuggy": "PASS",
+      "FeeERC20Conservation": "PASS",
+      "BurnFeeERC20Conservation": "PASS",
+      "MiniERC20Delta": "PASS",
+      "BurnFeeERC20Delta": "UNKNOWN"
+    },
+    "detail": {
+      "fixtures": {
+        "VaultAssetAGDead (require(false))": {
+          "probe": "R",
+          "solver_verdict": "proved",
+          "result": "FLAG",
+          "reachable": false,
+          "vacuous": true,
+          "reason": "unreachable point — assert(false) PROVED ⇒ vacuous"
+        },
+        "MiniERC20NoMintConservation (dead underflow)": {
+          "probe": "R",
+          "solver_verdict": "proved",
+          "result": "FLAG",
+          "reachable": false,
+          "vacuous": true,
+          "reason": "unreachable point — assert(false) PROVED ⇒ vacuous"
+        }
+      },
+      "live": {
+        "MiniERC20Conservation": {
+          "probe": "R",
+          "solver_verdict": "counterexample",
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "MiniERC20ConservationBuggy": {
+          "probe": "R",
+          "solver_verdict": "counterexample",
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "FeeERC20Conservation": {
+          "probe": "R",
+          "solver_verdict": "counterexample",
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "BurnFeeERC20Conservation": {
+          "probe": "R",
+          "solver_verdict": "counterexample",
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "MiniERC20Delta": {
+          "probe": "R",
+          "solver_verdict": "counterexample",
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "BurnFeeERC20Delta": {
+          "probe": "R",
+          "solver_verdict": "inconclusive",
+          "result": "UNKNOWN",
+          "reachable": null,
+          "vacuous": null,
+          "reason": "reachability uncertified in budget (CHC=inconclusive)"
+        }
+      }
+    }
+  },
+  "probe_M": {
+    "policy": "engine matched to invariant quantification (declared per family)",
+    "engine_rationale": {
+      "conservation": "CHC-only — reachable-state invariant; BMC yields spurious refutations from constructor-unreachable free states (measured: honest conservation 'refuted' by BMC with ghostSum=1,totalSupply=0, empty trace) — the dual of a vacuous proof",
+      "delta": "CHC+BMC — 2-state Hoare property holding from any precondition-satisfying entry; CHC reports the under-credit as inconclusive, BMC catches it"
+    },
+    "conservation_gate": {
+      "tag": "conservation",
+      "invariant": "ghostSum == totalSupply",
+      "engines": [
+        "chc"
+      ],
+      "verdict": "FLAG",
+      "flag_reasons": [
+        "Probe M: blind spots (invariant PROVES on bad callee) → ['adv:BurnFee']"
+      ],
+      "blocked_reasons": [],
+      "honest": {
+        "honest:MiniERC20": "proven"
+      },
+      "probe_R": {
+        "probe": "R",
+        "solver_verdict": "counterexample",
+        "result": "PASS",
+        "reachable": true,
+        "vacuous": false
+      },
+      "probe_M": {
+        "invariant": "ghostSum == totalSupply",
+        "base": {
+          "invariant": "ghostSum == totalSupply",
+          "per_member": {
+            "honest:MiniERC20": {
+              "bucket": "proven",
+              "by": {
+                "chc": "proven"
+              },
+              "evidence": {}
+            },
+            "adv:SupplyInflation": {
+              "bucket": "refuted",
+              "by": {
+                "chc": "refuted"
+              },
+              "evidence": {
+                "chc": {
+                  "verdict": "counterexample",
+                  "witness": {
+                    "assignments": {
+                      "totalSupply": "0",
+                      "ghostSum": "340282366920938463463374607431768211174"
+                    },
+                    "transaction_trace": [
+                      "MiniERC20ConservationBuggy.constructor()",
+                      "State: totalSupply = 0, ghostSum = 0",
+                      "MiniERC20ConservationBuggy.mintUnbacked(0x107b, 340282366920938463463374607431768211174)",
+                      "State: totalSupply = 0, ghostSum = 340282366920938463463374607431768211174",
+                      "MiniERC20ConservationBuggy.__check()",
+                      "34 |         assert(ghostSum == totalSupply); // __INVARIANT__ (gateway-injected)"
+                    ]
+                  },
+                  "reason": null
+                }
+              }
+            },
+            "adv:LosingFee": {
+              "bucket": "refuted",
+              "by": {
+                "chc": "refuted"
+              },
+              "evidence": {
+                "chc": {
+                  "verdict": "counterexample",
+                  "witness": null,
+                  "reason": null
+                }
+              }
+            },
+            "adv:BurnFee": {
+              "bucket": "proven",
+              "by": {
+                "chc": "proven"
+              },
+              "evidence": {}
+            }
+          },
+          "honest": {
+            "honest:MiniERC20": "proven"
+          },
+          "refuted_adversaries": [
+            "adv:LosingFee",
+            "adv:SupplyInflation"
+          ],
+          "blind_spots": [
+            "adv:BurnFee"
+          ],
+          "undecided": []
+        },
+        "mutations": [
+          {
+            "mutation": "drop_to_true",
+            "weakens": "whole invariant → ⊤",
+            "expr": "true",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:LosingFee",
+              "adv:SupplyInflation"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "eq_to_ge",
+            "weakens": "== → >= (drops the ≤ half)",
+            "expr": "ghostSum >= totalSupply",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:SupplyInflation"
+            ],
+            "lost_to_undecided": [
+              "adv:LosingFee"
+            ],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "eq_to_le",
+            "weakens": "== → <= (drops the ≥ half)",
+            "expr": "ghostSum <= totalSupply",
+            "refuted_adversaries": [
+              "adv:SupplyInflation"
+            ],
+            "lost_to_blind": [
+              "adv:LosingFee"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          }
+        ]
+      },
+      "sanity": {
+        "tie_broken": []
+      },
+      "judge": "solver (SMTChecker — CHC for Probe R; per-family engines for Probe M, z3) — zero LLM judge"
+    },
+    "delta_gate": {
+      "tag": "delta",
+      "invariant": "balanceOf[to] >= beforeTo + amount",
+      "engines": [
+        "chc",
+        "bmc"
+      ],
+      "verdict": "PASS",
+      "flag_reasons": [],
+      "blocked_reasons": [],
+      "honest": {
+        "honest:MiniERC20": "proven"
+      },
+      "probe_R": {
+        "probe": "R",
+        "solver_verdict": "counterexample",
+        "result": "PASS",
+        "reachable": true,
+        "vacuous": false
+      },
+      "probe_M": {
+        "invariant": "balanceOf[to] >= beforeTo + amount",
+        "base": {
+          "invariant": "balanceOf[to] >= beforeTo + amount",
+          "per_member": {
+            "honest:MiniERC20": {
+              "bucket": "proven",
+              "by": {
+                "chc": "proven",
+                "bmc": "proven"
+              },
+              "evidence": {}
+            },
+            "adv:BurnFee": {
+              "bucket": "refuted",
+              "by": {
+                "chc": "unknown",
+                "bmc": "refuted"
+              },
+              "evidence": {
+                "chc": {
+                  "verdict": "inconclusive",
+                  "witness": null,
+                  "reason": "verification condition could not be proved (nonlinear arithmetic / over-approximation / timeout — the SMTChecker wall)"
+                },
+                "bmc": {
+                  "verdict": "counterexample",
+                  "witness": {
+                    "assignments": {
+                      "amount": "2438",
+                      "balanceOf[from]": "0xFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFdd68",
+                      "balanceOf[to]": "2437",
+                      "beforeTo": "0",
+                      "from": "11798",
+                      "to": "11797"
+                    },
+                    "transaction_trace": []
+                  },
+                  "reason": null
+                }
+              }
+            }
+          },
+          "honest": {
+            "honest:MiniERC20": "proven"
+          },
+          "refuted_adversaries": [
+            "adv:BurnFee"
+          ],
+          "blind_spots": [],
+          "undecided": []
+        },
+        "mutations": [
+          {
+            "mutation": "drop_to_true",
+            "weakens": "whole invariant → ⊤",
+            "expr": "true",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:BurnFee"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "zero_rhs",
+            "weakens": "RHS → 0 (tautology probe)",
+            "expr": "balanceOf[to] >= 0",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:BurnFee"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "relax_plus1",
+            "weakens": "+1 slack on LHS",
+            "expr": "balanceOf[to] + 1 >= beforeTo + amount",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:BurnFee"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "keep_only_beforeTo",
+            "weakens": "keep only `beforeTo` in RHS",
+            "expr": "balanceOf[to] >= beforeTo",
+            "refuted_adversaries": [],
+            "lost_to_blind": [
+              "adv:BurnFee"
+            ],
+            "lost_to_undecided": [],
+            "classification": "load_bearing"
+          },
+          {
+            "mutation": "keep_only_amount",
+            "weakens": "keep only `amount` in RHS",
+            "expr": "balanceOf[to] >= amount",
+            "refuted_adversaries": [
+              "adv:BurnFee"
+            ],
+            "lost_to_blind": [],
+            "lost_to_undecided": [],
+            "classification": "inert"
+          }
+        ]
+      },
+      "sanity": {
+        "tie_broken": []
+      },
+      "judge": "solver (SMTChecker — CHC for Probe R; per-family engines for Probe M, z3) — zero LLM judge"
+    }
+  },
+  "headline": {
+    "conservation_blind_spots": [
+      "adv:BurnFee"
+    ],
+    "delta_blind_spots": [],
+    "conservation_neq_delta_auto_rediscovered": true,
+    "note": "conservation PROVES on the burning-fee callee (blind) while delta REFUTES it; the gate flags conservation as a vacuous proxy and clears delta — the same gap found by hand under review last session, now caught automatically."
+  },
+  "judge": "solver (SMTChecker CHC[R] / CHC+BMC[M], z3) — zero LLM judge"
+}

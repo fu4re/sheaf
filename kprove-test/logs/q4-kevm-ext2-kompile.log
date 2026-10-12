@@ -1,0 +1,2 @@
+[Error] Compiler: Too many top cells for module KEVM-EXT2: HashSet(KevmCell,
+CallCounterCell)

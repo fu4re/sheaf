@@ -1,0 +1,13 @@
+Parse command line options                                   =  0.018s
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q3/q3-loop-spec.k)
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q3/q3-semantics.k)
+Outer parsing [65 modules]                                   =  0.478s
+  New scanner: Q3-LOOP-SPEC-RULE-CELLS                       =  0.217s
+Parse spec modules [1/1 rules]                               =  0.630s
+Apply prover steps                                           =  0.246s
+Executing [kore-exec, /Users/akkedeline/sheaf/kprove-test/repro/t1-q3/./q3-kompiled/definition.kore, --module, Q3, --prove, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-13-221-f7b8ccb0-9438-467b-86f7-d9f0fcf6916f/spec.kore, --spec-module, Q3-LOOP-SPEC, --output, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-13-221-f7b8ccb0-9438-467b-86f7-d9f0fcf6916f/result.kore]
+Executing command: kore-exec /Users/akkedeline/sheaf/kprove-test/repro/t1-q3/./q3-kompiled/definition.kore --module Q3 --prove /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-13-221-f7b8ccb0-9438-467b-86f7-d9f0fcf6916f/spec.kore --spec-module Q3-LOOP-SPEC --output /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-13-221-f7b8ccb0-9438-467b-86f7-d9f0fcf6916f/result.kore
+Backend                                                      =  0.231s
+#Top
+Cleanup                                                      =  0.017s
+Total                                                        =  1.620s

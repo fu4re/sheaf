@@ -1,0 +1,7 @@
+{
+  "project": "../../trusted/proofs/aave_arith",
+  "project_note": "path relative to this package dir",
+  "theorems": {
+    "L_cons": "trusted/proofs/aave_arith"
+  }
+}

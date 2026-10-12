@@ -1,0 +1,13 @@
+Parse command line options                                   =  0.018s
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q4/q4t-trusted-spec.k)
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q4/q4-semantics.k)
+Outer parsing [65 modules]                                   =  0.440s
+  New scanner: Q4T-TRUSTED-SPEC-RULE-CELLS                   =  0.225s
+Parse spec modules [2/2 rules]                               =  0.645s
+Apply prover steps                                           =  0.222s
+Executing [kore-exec, /Users/akkedeline/sheaf/kprove-test/repro/t1-q4/./q4-kompiled/definition.kore, --module, Q4, --prove, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-11-059-185b4137-025c-41d8-9fdc-71c27f23fe6c/spec.kore, --spec-module, Q4T-TRUSTED-SPEC, --output, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-11-059-185b4137-025c-41d8-9fdc-71c27f23fe6c/result.kore]
+Executing command: kore-exec /Users/akkedeline/sheaf/kprove-test/repro/t1-q4/./q4-kompiled/definition.kore --module Q4 --prove /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-11-059-185b4137-025c-41d8-9fdc-71c27f23fe6c/spec.kore --spec-module Q4T-TRUSTED-SPEC --output /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-11-059-185b4137-025c-41d8-9fdc-71c27f23fe6c/result.kore
+Backend                                                      =  0.251s
+#Top
+Cleanup                                                      =  0.017s
+Total                                                        =  1.593s

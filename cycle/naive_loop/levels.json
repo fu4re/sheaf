@@ -1,0 +1,50 @@
+{
+  "_doc": "Pre-registered SUT ladder + canonical invariant sets for Task 0004 (naive loop ceiling). FROZEN BEFORE RUNS. Each invariant is classified by expressiveness class {stateless | quantified | temporal} and flagged `linearizable_by_synthesis` — the revision-point-6 distinction: the true moat is only invariants that stay HARD under an adversarially-helpful implementation choice. In synthesis (`spec -> code`) the canonical set is the USER'S INPUT (the economic law); the loop's job is to realize code + DISCHARGE the proof, not to guess the law. Score = fraction of this set the loop drives to solver-`proved`.",
+  "_classes": {
+    "stateless": "single-state algebraic relation over current storage (SMTChecker-native)",
+    "quantified": "needs a sum/quantifier over a mapping (tracked-sum ghost — wall of Finding 0001)",
+    "temporal": "needs old()/2-state pre-post reasoning (wall of Finding 0001/0002)"
+  },
+  "L1": {
+    "title": "simple linear vault (1:1, no fee, no rebase)",
+    "mode": "synthesis",
+    "given_code": null,
+    "canonical": [
+      {"name": "conservation_1to1", "informal": "totalShares == totalAssets — no value minted from air", "class": "stateless", "linearizable_by_synthesis": true},
+      {"name": "solvency_price_geq_1", "informal": "totalAssets >= totalShares — every share backed by >= 1 asset unit", "class": "stateless", "linearizable_by_synthesis": true},
+      {"name": "no_orphan_shares", "informal": "totalShares == 0  <=>  totalAssets == 0 — no shares without backing and vice versa", "class": "stateless", "linearizable_by_synthesis": true}
+    ]
+  },
+  "L2": {
+    "title": "vault + fee + nonzero exchange rate (mulDiv rounding)",
+    "mode": "synthesis",
+    "given_code": null,
+    "canonical": [
+      {"name": "solvency_price_geq_1", "informal": "totalAssets >= totalShares under fee + rounding", "class": "stateless", "linearizable_by_synthesis": true},
+      {"name": "fee_backing", "informal": "accruedFees <= totalAssets — cannot owe more fees than assets held", "class": "stateless", "linearizable_by_synthesis": true},
+      {"name": "share_price_monotone", "informal": "shares minted per deposit never exceed proportional share (no dilution via rounding)", "class": "stateless", "linearizable_by_synthesis": false}
+    ]
+  },
+  "L3": {
+    "title": "vault + accrual/rebase over time",
+    "mode": "synthesis",
+    "given_code": null,
+    "canonical": [
+      {"name": "fees_monotonic", "informal": "accumulatedFees is non-decreasing across any state transition (2-state)", "class": "temporal", "linearizable_by_synthesis": false},
+      {"name": "accrual_on_balance_change", "informal": "balance change implies accrual was applied (2-state)", "class": "temporal", "linearizable_by_synthesis": false},
+      {"name": "solvency_with_accrual", "informal": "totalAssets >= totalShares preserved across accrual", "class": "stateless", "linearizable_by_synthesis": false}
+    ]
+  },
+  "L4": {
+    "title": "REAL CODE: MakerDAO Vat port (equivalence-proven, self-contained)",
+    "mode": "invariant_on_given_code",
+    "given_code": "ground_truth/dss_vat/src/Vat.sol",
+    "_note": "Head-to-head: of the laws our CURATED pipeline drove to proven (VatDaiConservation, VatSolvency), how many does the naive loop reach WITHOUT our curated harness? Curated harnesses are FORBIDDEN inputs.",
+    "canonical": [
+      {"name": "dai_conservation", "informal": "Sum dai[u] == debt — no Dai from air", "class": "quantified", "linearizable_by_synthesis": false, "requires_mapping_sum": "dai", "curated_proven": "trusted/harness/VatDaiConservation.sol"},
+      {"name": "debt_solvency", "informal": "debt == vice + Sum_i (Art_i * rate_i) — every Dai backed by a CDP or accounted as system debt", "class": "quantified", "linearizable_by_synthesis": false, "requires_product": true, "curated_proven": "trusted/harness/VatSolvency.sol"},
+      {"name": "sin_conservation", "informal": "Sum sin[u] == vice", "class": "quantified", "linearizable_by_synthesis": false, "requires_mapping_sum": "sin"},
+      {"name": "fee_monotonic", "informal": "fold: backed debt only grows with rate delta (2-state)", "class": "temporal", "linearizable_by_synthesis": false}
+    ]
+  }
+}

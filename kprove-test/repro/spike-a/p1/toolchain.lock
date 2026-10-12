@@ -1,0 +1,25 @@
+# SPIKE-A toolchain.lock  (pinned, П-1)
+# Задан ДО первого прогона. Любое отклонение — в отчёт (task §Стенд).
+
+[stand]
+KEVM     = 1.0.678          # matches task §Стенд
+K        = v7.1.337         # matches task §Стенд
+kprove   = v7.1.337         # raw kprove; kontrol-дистрибутив НЕ используется (task §Стенд)
+solc     = 0.8.35+commit.47b9dedd   # matches task §Стенд; canonical /opt/homebrew/bin/solc
+cast     = 1.2.3-stable     # U-side / keccak only, not judge
+
+[deviation]
+z3       = 4.12.6           # KEVM-bundled. CLAUDE.md canonical = 4.16.0 → DEVIATION, recorded.
+                            # Влияние на вердикт оценить в отчёте (SMT backend version).
+
+[build]                     # canonical WETH9 compile settings (frozen)
+evm_version   = shanghai    # PUSH0 (0x5f) present ⇒ fork ≥ Shanghai required in KEVM schedule
+optimizer     = on
+optimizer_runs = 200
+source        = WETH9.sol
+
+[class_E]                   # environment class for the claim harness (task П-1 step 2)
+schedule = SHANGHAI         # KEVM schedule; must admit PUSH0
+chainid  = 1                # to confirm against fork default at П-1 config assembly
+gas      = symbolic / high-cap   # functional property, gas non-limiting; pin at harness assembly
+# NOTE: fork = T1 fork + <inFunc> (ghost-diff), rebuilt --emit-json for the APRProof path (per spike-D З-1').

@@ -1,0 +1,52 @@
+{
+  "contract": "VaultAssetAG",
+  "method": "deposit",
+  "spec_source": "replay:VaultAsset__cross_spec.seed.json",
+  "invariant": {
+    "name": "cross_solvency",
+    "solidity_expr": "vaultBal >= totalAssets",
+    "kind": "cross_contract_invariant",
+    "informal": "the vault holds at least what it accounts for: balanceOf(vault) >= totalAssets"
+  },
+  "gateway": {
+    "mode": "cross:VaultAssetAG.sol",
+    "harness": "measurement/artifacts/build/VaultAssetAG__cross.sol",
+    "compiles": true
+  },
+  "verdict": {
+    "verdict": "proved",
+    "witness": null,
+    "reason": null,
+    "engine": "chc",
+    "solvers": [
+      "z3"
+    ],
+    "targets": [
+      "assert"
+    ],
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "command": [
+      "/opt/homebrew/bin/solc",
+      "--model-checker-engine",
+      "chc",
+      "--model-checker-targets",
+      "assert",
+      "--model-checker-solvers",
+      "z3",
+      "--model-checker-timeout",
+      "20000",
+      "/Users/akkedeline/sheaf/cycle/measurement/artifacts/build/VaultAssetAG__cross.sol"
+    ],
+    "duration_s": 0.115,
+    "raw": "Info: CHC: 2 verification condition(s) proved safe! Enable the model checker option \"show proved safe\" to see all of them."
+  },
+  "ground_truth_delta": {
+    "match": "n/a",
+    "note": "cross-contract A/G; interface mining + callee discharge tracked in measurement/artifacts/cross_ag__triage.json"
+  },
+  "provenance": {
+    "backend": "seed (deterministic replay)",
+    "model_requested": "n/a",
+    "note": "stands in for module [1] over-generation; the solver triages in cross_triage_demo.py"
+  }
+}

@@ -1,0 +1,117 @@
+# Task 0014 Фаза 2 — nonlinear lemma catalog.
+# Each lemma: canonical Lean statement (MUST match the SMT abstraction exactly), the
+# source it was formulated from, its side-condition (overflow / quantifier form), and
+# which corpus fixtures it serves (`serves` filled from Фаза 1 census.json).
+#
+# Sourcing discipline (not ad hoc), by priority:
+#   mined-VC : the verification condition SMTChecker choked on IS the lemma candidate.
+#   certora  : Aave/Compound Certora specs already POSTULATE this bound as an axiom.
+#   mathlib  : the fact already exists in Mathlib; we only instantiate.
+#
+# Every discharged lemma is kernel-audited by AaveArith.AxiomAudit
+# (#print axioms ⊆ {propext, Classical.choice, Quot.sound}, no sorryAx).
+
+schema: tcg/lemma_catalog/v1
+base_operation: "mulDiv(x,y,d) = ⌊x·y / d⌋   (rayMul/rayDiv/wad* are specializations)"
+
+families:
+
+  - id: bounds
+    desc: "one-sided bounds / monotonicity — underpin 'shares ≤ assets'-type invariants"
+    lemmas:
+      - name: AaveArith.mulDiv_le_left
+        statement: "y ≤ d → mulDiv x y d ≤ x"
+        source: mined-VC        # exactly the frozen ghost `mintedShares ≤ assets` (ProportionalVaultGhost)
+        also: certora           # fees_LEQ_ATokenBal.spec ghost mulDiv4_g
+        side_condition: "ℕ floor model; transfers to uint256 only under x·y < 2^256 (overflow leaf)"
+        status: proven
+        serves: []              # ← census
+      - name: AaveArith.rayMul_lower
+        statement: "RAY ≤ index → x ≤ rayMul x index"
+        source: certora
+        side_condition: "index ∈ [RAY, ·); ℕ model + non-overflow"
+        status: proven
+        serves: []
+      - name: AaveArith.rayMul_upper
+        statement: "index ≤ 2·RAY → rayMul x index ≤ 2·x"
+        source: certora
+        side_condition: "index ∈ [·, 2·RAY]; ℕ model + non-overflow"
+        status: proven
+        serves: []
+      - name: AaveArith.rayDiv_upper
+        statement: "RAY ≤ index → rayDiv x index ≤ x"
+        source: certora
+        side_condition: "index ≥ RAY; ℕ model + non-overflow"
+        status: proven
+        serves: []
+      - name: AaveArith.rayDiv_lower
+        statement: "0 < index → index ≤ 2·RAY → x/2 ≤ rayDiv x index"
+        source: certora
+        side_condition: "index ∈ (0, 2·RAY]; ℕ model + non-overflow"
+        status: proven
+        serves: []
+
+  - id: tightness
+    desc: "floor-division slack — underpin 'rounding creates no value'"
+    lemmas:
+      - name: AaveArith.mulDiv_mul_le
+        statement: "mulDiv x y d * d ≤ x·y"
+        source: mathlib          # Nat.div_mul_le_self
+        also: certora
+        side_condition: "ℕ floor model"
+        status: proven
+        serves: []
+      - name: AaveArith.mulDiv_tightness
+        statement: "0 < d → x·y < (mulDiv x y d + 1)·d"
+        source: mined-VC
+        side_condition: "0 < d; pairs with mulDiv_mul_le for the EXACT bracket"
+        status: proven
+        serves: []
+
+  - id: zero
+    desc: "edge / base cases — first deposit, empty vault"
+    lemmas:
+      - name: AaveArith.mulDiv_eq_zero
+        statement: "(x = 0 ∨ y = 0) → mulDiv x y d = 0"
+        source: certora
+        side_condition: "none (exact over ℕ)"
+        status: proven
+        serves: []
+
+  - id: conservation
+    desc: "distributivity / Σ-conservation — underpin 'total conserved' (linear-in-disguise)"
+    lemmas:
+      - name: AaveArith.ar_delta
+        statement: "(Art + dart)·rate = Art·rate + dart·rate   (over ℤ)"
+        source: mined-VC          # Vat ghostAR faithfulness (dtab = dart·rate)
+        side_condition: "signed ℤ; the ghost-shadow faithfulness fact"
+        status: proven
+        serves: []
+      - name: Erc20.transfer_pair_sum_preserved
+        statement: "amt ≤ a → (a - amt) + (b + amt) = a + b"
+        source: mined-VC          # ERC20 callee guarantee G_B (cross-contract A/G)
+        side_condition: "amt ≤ a; ℕ; transfers to uint256 under bal[dst]+amt < 2^256"
+        status: proven
+        serves: []
+      - name: Erc20.transfer_sum_preserved
+        statement: "Σ_{x∈s} update (update f src (f src−amt)) dst (f dst+amt) x = Σ_{x∈s} f x"
+        source: mined-VC
+        side_condition: "src≠dst, amt ≤ f src; the Σ-over-Finset (mapping-level) form"
+        status: proven
+        serves: []
+
+  - id: overflow_side_condition
+    desc: "ℕ↔256-bit word bridge — the SIDE-CONDITION every ℕ lemma above needs on-chain"
+    lemmas:
+      - name: "(none yet)"
+        statement: "x·y < 2^256   (and per-op non-overflow guards)"
+        source: mined-VC
+        side_condition: "THIS IS the side-condition; discharging it links the ℕ law to BitVec-256"
+        status: not_discharged    # HONEST GAP — Risk #1 in Task 0014; ℕ lemmas assume it
+        serves: []                # bridge must discharge OR carry as a named `assumed` leaf
+
+# Notes:
+#  - `serves` is filled from Фаза 1 census.json (fixture → family → lemma) — measures M/C.
+#  - The overflow_side_condition family is the load-bearing HONEST gap (Task 0014 trap #1):
+#    the bounds/tightness/conservation lemmas hold over ℕ; injecting them as word-level
+#    SMT assumptions is sound ONLY with the non-overflow guard discharged or declared.

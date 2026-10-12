@@ -1,0 +1,1 @@
+{"id": "Z1-FRONTIER-SPEC.z1-withdraw-V-symbolic", "subproof_ids": [], "admitted": false, "execution_time": 0, "type": "APRProof", "init": 1, "target": 2, "terminal": [], "node_refutations": {}, "circularity": false, "logs": {}, "bounded": [], "loops_cache": {}}

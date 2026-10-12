@@ -1,0 +1,48 @@
+meta:
+  bridge_note: Lean leaf is a level-1 bridge (text-match of formulations); see axiom_registry.json.
+lean_theorems:
+- id: L_cons
+  statement_human: a transfer debiting one balance and crediting another by the same
+    amount preserves the pair sum — so the tracked-sum ghost == totalSupply is faithful
+  statement_formal: (a - amt) + (b + amt) = a + b   (and the Σ-over-Finset form)
+  file: evidence/lean/L_cons__Basic.lean
+  theorem_name: Erc20.transfer_pair_sum_preserved
+  build_status: ok
+  status: proven
+assumptions:
+- id: A_ag_rule
+  statement_human: Assume-guarantee composition is sound for this configuration.
+  statement_formal: (A ⊨ I_A | G_B) ∧ (B ⊨ G_B) ⟹ (A∘B ⊨ I_A), single external call,
+    no reentrancy
+  why_assumed: 'The composition meta-rule is applied, not proven here. It is sound
+    for a single external call with a non-reentrant frame (Finding 0004); a general
+    proof is a separate track.
+
+    '
+  risk_if_false: 'If reentrancy or multiple interleaved external calls are possible,
+    the caller proof under havoc+require(G_B) may not transfer to A∘B.
+
+    '
+  status: assumed
+- id: A_solver
+  statement_human: The SMT solver's verdicts (z3 via SMTChecker) are sound.
+  statement_formal: trust(z3 4.16.0 + SMTChecker CHC/BMC) — no independent kernel
+    re-check
+  why_assumed: 'The CHC/BMC proofs of C1 and C2 are taken on the solver''s word. lean-smt
+    proof reconstruction (DoD #3) would replace this leaf with a Lean-kernel re-check;
+    that experiment is time-boxed and tracked separately. Until then, this leaf is
+    visible, not hidden.
+
+    '
+  risk_if_false: 'A solver soundness bug would make a ''proven'' claim false. Mitigated
+    by determinism and the witness-bearing refutations, but not eliminated.
+
+    '
+  status: assumed
+harness_faithfulness:
+- id: H_model
+  target: VaultAssetAG (vault) ∘ MiniERC20 (asset)
+  claim: the cross harness's modelled semantics equal the deployed EVM bytecode
+  evidence: not measured for this pilot (diff-fuzz N runs is the intended evidence)
+  evidence_ref: n/a
+  status: unverified

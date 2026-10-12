@@ -1,0 +1,200 @@
+{
+  "schema": "tcg/setup_report/v1",
+  "toolchain_pins": {
+    "solc": "0.8.35",
+    "z3": "4.16.0",
+    "lean": "4.31.0"
+  },
+  "probes": [
+    {
+      "probe": "P0",
+      "name": "versions",
+      "status": "OK",
+      "expected": "solc 0.8.35, lean 4.31.0; record bundled z3",
+      "got": "solc 0.8.35+commit.47b9dedd.Darwin.appleclang, lean 4.31.0, z3(standalone) 4.12.6",
+      "detail": {
+        "solc": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+        "solc_pin": "0.8.35",
+        "z3_standalone": "4.12.6",
+        "z3_pin": "4.16.0",
+        "z3_bundled": {
+          "linkage": "static",
+          "version": "not exposed by solc CLI",
+          "note": "solc statically links its own z3; the judging version is opaque and is NOT the standalone z3 on PATH"
+        },
+        "lean": "4.31.0",
+        "lean_pin": "4.31.0",
+        "python": "3.12.2"
+      },
+      "notes": [
+        "z3 skew: standalone=4.12.6 vs pin=4.16.0; the bundled judging z3 is statically linked and not the standalone — recorded, not green-affecting"
+      ]
+    },
+    {
+      "probe": "P1",
+      "name": "prove (CHC)",
+      "status": "OK",
+      "expected": "proved",
+      "got": "proved",
+      "detail": {
+        "reason": null
+      }
+    },
+    {
+      "probe": "P2",
+      "name": "refute+witness (CHC)",
+      "status": "OK",
+      "expected": "counterexample (witness a=1)",
+      "got": "counterexample",
+      "detail": {
+        "witness": {
+          "assignments": {
+            "a": "1"
+          },
+          "transaction_trace": [
+            "ProvableFail.constructor()",
+            "ProvableFail.roundTripDivByTwo(1)",
+            "21 |         assert((a / 2) * 2 == a); // REFUTED: counterexample a = 1"
+          ]
+        },
+        "note": null
+      }
+    },
+    {
+      "probe": "P3",
+      "name": "e2e MiniVault",
+      "status": "OK",
+      "expected": "proved",
+      "got": "proved",
+      "detail": {
+        "invariant": "totalShares == totalAssets",
+        "witness": null,
+        "reason": null
+      }
+    },
+    {
+      "probe": "P4",
+      "name": "e2e MiniVaultBuggy",
+      "status": "OK",
+      "expected": "counterexample",
+      "got": "counterexample",
+      "detail": {
+        "invariant": "totalShares == totalAssets",
+        "witness": {
+          "assignments": {
+            "totalAssets": "0",
+            "totalShares": "1"
+          },
+          "transaction_trace": [
+            "__Harness.constructor()",
+            "State: totalAssets = 0, totalShares = 0",
+            "MiniVaultBuggy.deposit(0)",
+            "State: totalAssets = 0, totalShares = 1",
+            "__Harness.__check_invariant()",
+            "26 |         assert(totalShares == totalAssets);"
+          ]
+        },
+        "reason": null
+      }
+    },
+    {
+      "probe": "P5",
+      "name": "vacuity FLAG (dead)",
+      "status": "OK",
+      "expected": "FLAG (both)",
+      "got": "VaultAssetAGDead=FLAG, MiniERC20NoMintConservation=FLAG",
+      "detail": {
+        "VaultAssetAGDead": {
+          "result": "FLAG",
+          "solver_verdict": "proved",
+          "reason": "unreachable point — assert(false) PROVED ⇒ vacuous"
+        },
+        "MiniERC20NoMintConservation": {
+          "result": "FLAG",
+          "solver_verdict": "proved",
+          "reason": "unreachable point — assert(false) PROVED ⇒ vacuous"
+        }
+      }
+    },
+    {
+      "probe": "P6",
+      "name": "engine⟂quantifier policy",
+      "status": "OK",
+      "expected": "BMC refutes false delta; CHC proves honest conservation (BMC-CE there is spurious)",
+      "got": "delta[chc=counterexample,bmc=counterexample] cons[chc=proved,bmc=counterexample]",
+      "detail": {
+        "p6a_delta": {
+          "invariant": "balanceOf[to] >= beforeTo + amount",
+          "chc": "counterexample",
+          "bmc": "counterexample",
+          "bmc_witness": {
+            "assignments": {
+              "amount": "2438",
+              "balanceOf[from]": "0xFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFffffFFFFdd68",
+              "balanceOf[to]": "2437",
+              "beforeTo": "0",
+              "from": "11798",
+              "to": "11797"
+            },
+            "transaction_trace": []
+          },
+          "soundness": "BMC refutes the under-credit; CHC does not falsely prove it"
+        },
+        "p6b_conservation": {
+          "invariant": "ghostSum == totalSupply",
+          "chc": "proved",
+          "bmc": "counterexample",
+          "bmc_witness": {
+            "assignments": {
+              "amount": "0",
+              "from": "0",
+              "ghostSum": "1",
+              "to": "0",
+              "totalSupply": "0"
+            },
+            "transaction_trace": []
+          },
+          "bmc_counterexample_is_spurious": true,
+          "soundness": "CHC proves honest conservation over all reachable states; the BMC counterexample (free entry state, empty/short trace) is provably spurious ⇒ engine policy is CHC-only for reachable-state invariants (guards against a false REFUTE)"
+        },
+        "finding_0002_note": "Finding 0002 recorded CHC as INCONCLUSIVE on the burning-fee delta; on this toolchain CHC refutes it directly (chc=counterexample). Candidate toolchain drift (newer solc/bundled-z3 strengthened CHC). Soundness unaffected — both engines refute the false property; no false green."
+      }
+    },
+    {
+      "probe": "P7",
+      "name": "lean trusted base builds",
+      "status": "OK",
+      "expected": "lake build rc=0",
+      "got": "rc=0 (7.6s)",
+      "detail": {
+        "tail": [
+          "warning: AaveArith/Basic.lean:1:1: * '-/':",
+          "Copyright too short!",
+          "",
+          "",
+          "Note: This linter can be disabled with `set_option linter.style.header false`",
+          "Build completed successfully (8560 jobs)."
+        ]
+      }
+    },
+    {
+      "probe": "P8",
+      "name": "ext-calls Trace ceiling",
+      "status": "OK",
+      "expected": "untrusted does NOT prove (havoc wall)",
+      "got": "untrusted=counterexample (wall), trusted=proved",
+      "detail": {
+        "untrusted_mode": "counterexample",
+        "trusted_mode": "proved",
+        "meaning": "untrusted = sound havoc wall; trusted = assumes no reentrancy (vacuous-interface risk). The gap is the source-level Trace ceiling."
+      }
+    }
+  ],
+  "verify_level": {
+    "source_level_sufficient_for_mvp_gate": true,
+    "source_level": "source-level SMTChecker is SOUND for the MVP gate: it proves true invariants (P1/P3), refutes false ones with witnesses (P2/P4), FLAGs vacuous proofs (P5), and the engine⟂quantifier policy holds (P6: BMC refutes the false delta; CHC-only for reachable-state conservation, where BMC's free-state counterexample is spurious).",
+    "trace_deep": "Trace-deep (reasoning THROUGH external calls) hits the havoc wall under the sound (untrusted) ext-calls mode → Trace-deep is DEFERRED to KEVM/Halmos. Source-level covers Pre / Post / Exit-safety + the non-reentrant Trace subset only — recorded honestly, not silently dropped.",
+    "decision": "MVP gate = source-level SMTChecker (Pre/Post/Exit-safety + non-reentrant Trace subset). Trace-deep + bytecode-identity remain DISCHARGEABLE leaves → a clean source-level run is ⊥_assumptions_open, not green."
+  },
+  "exit_code": 0
+}

@@ -1,0 +1,62 @@
+{
+  "schema": "tcg/check/v1",
+  "contract": "MiniVault",
+  "method": "deposit",
+  "phi_hash": "518d5504343d6cada615eb73471a54a7245917d25418045993e269cf3d402c90",
+  "phi_hash_reconfirmed": true,
+  "checker_params_used": {
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "engine": "chc",
+    "targets": [
+      "assert"
+    ],
+    "ext_calls": "untrusted",
+    "model_checker_timeout_ms": 20000,
+    "solvers": [
+      "z3"
+    ]
+  },
+  "post_invariant": "totalShares == totalAssets",
+  "k_result": "accept",
+  "k_gate_exit": null,
+  "reason": null,
+  "witness": null,
+  "certificate": {
+    "harness": "cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol",
+    "command": [
+      "/opt/homebrew/bin/solc",
+      "--model-checker-engine",
+      "chc",
+      "--model-checker-targets",
+      "assert",
+      "--model-checker-solvers",
+      "z3",
+      "--model-checker-timeout",
+      "20000",
+      "--model-checker-ext-calls",
+      "untrusted",
+      "/Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol"
+    ],
+    "engine": "chc",
+    "targets": [
+      "assert"
+    ],
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang"
+  },
+  "solver_verdict": "proved",
+  "harness": "cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol",
+  "command": [
+    "/opt/homebrew/bin/solc",
+    "--model-checker-engine",
+    "chc",
+    "--model-checker-targets",
+    "assert",
+    "--model-checker-solvers",
+    "z3",
+    "--model-checker-timeout",
+    "20000",
+    "--model-checker-ext-calls",
+    "untrusted",
+    "/Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVault-T0008/build/MiniVault__harness.sol"
+  ]
+}

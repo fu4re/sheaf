@@ -1,0 +1,13 @@
+Parse command line options                                   =  0.018s
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/q1d/q1d-a-true-trusted.k)
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/q1d/q1d-semantics.k)
+Outer parsing [65 modules]                                   =  0.434s
+  New scanner: Q1D-A-TRUE-TRUSTED-RULE-CELLS                 =  0.217s
+Parse spec modules [2/2 rules]                               =  0.588s
+Apply prover steps                                           =  0.225s
+Executing [kore-exec, /Users/akkedeline/sheaf/kprove-test/./repro/q1d/q1d-kompiled/definition.kore, --module, Q1D, --prove, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-15-16-05-029-5f28a8c3-5568-48a8-a2dc-6aa03a0f637e/spec.kore, --spec-module, Q1D-A-TRUE-TRUSTED, --output, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-15-16-05-029-5f28a8c3-5568-48a8-a2dc-6aa03a0f637e/result.kore]
+Executing command: kore-exec /Users/akkedeline/sheaf/kprove-test/./repro/q1d/q1d-kompiled/definition.kore --module Q1D --prove /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-15-16-05-029-5f28a8c3-5568-48a8-a2dc-6aa03a0f637e/spec.kore --spec-module Q1D-A-TRUE-TRUSTED --output /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-15-16-05-029-5f28a8c3-5568-48a8-a2dc-6aa03a0f637e/result.kore
+Backend                                                      =  0.190s
+#Top
+Cleanup                                                      =  0.018s
+Total                                                        =  1.473s

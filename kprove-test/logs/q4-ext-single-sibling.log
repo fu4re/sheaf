@@ -1,0 +1,2 @@
+[Error] Compiler: Too many top cells for module EXT-SINGLE-SIBLING:
+HashSet(TopCell, CallCounterCell)

@@ -1,0 +1,27 @@
+record_id: R_bug
+kind: smt_solve
+produced_by:
+  component: smtchecker
+subject:
+  human: 'naive over-claim: the buggy vault never mints a share from nothing'
+  formal: totalShares == totalAssets
+  shape: stateless
+result:
+  verdict: refuted
+  engine: solc 0.8.35 chc z3
+  witness:
+    assignments:
+      totalAssets: '0'
+      totalShares: '1'
+    transaction_trace:
+    - __Harness.constructor()
+    - 'State: totalAssets = 0, totalShares = 0'
+    - MiniVaultBuggy.deposit(0)
+    - 'State: totalAssets = 0, totalShares = 1'
+    - __Harness.__check_invariant()
+    - 31 |         assert(totalShares == totalAssets);
+  reproduce: solc --model-checker-engine chc --model-checker-targets assert --model-checker-solvers
+    z3 --model-checker-timeout 20000 <harness>
+  raw_ref: measurement/artifacts/MiniVaultBuggy__verdict.json
+artifacts:
+- measurement/artifacts/build/MiniVaultBuggy__harness.sol

@@ -1,0 +1,3 @@
+kore-exec: [368093] Warning (WarnTrivialClaim):
+    Claim proven without rewriting at: /Users/akkedeline/sheaf/kprove-test/repro/t3-q3/guarenv-check-spec.k:13:5-18:45
+#Top

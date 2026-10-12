@@ -1,0 +1,54 @@
+{
+  "schema": "tcg/check/v1",
+  "contract": "MiniVaultBuggy",
+  "method": "deposit",
+  "phi_hash": "41df8c318802dd635d011e6f6c62254fe5f6966065f0182508bbd2e9d8d6fd34",
+  "phi_hash_reconfirmed": true,
+  "checker_params_used": {
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "engine": "chc",
+    "targets": [
+      "assert"
+    ],
+    "ext_calls": "untrusted",
+    "model_checker_timeout_ms": 20000,
+    "solvers": [
+      "z3"
+    ]
+  },
+  "post_invariant": "totalShares == totalAssets",
+  "k_result": "refute",
+  "k_gate_exit": 3,
+  "reason": "solver found a concrete counterexample",
+  "witness": {
+    "assignments": {
+      "totalAssets": "0",
+      "totalShares": "1"
+    },
+    "transaction_trace": [
+      "__Harness.constructor()",
+      "State: totalAssets = 0, totalShares = 0",
+      "MiniVaultBuggy.deposit(0)",
+      "State: totalAssets = 0, totalShares = 1",
+      "__Harness.__check_invariant()",
+      "26 |         assert(totalShares == totalAssets);"
+    ]
+  },
+  "certificate": null,
+  "solver_verdict": "counterexample",
+  "harness": "cycle/measurement/artifacts/tcg_runs/MiniVaultBuggy-RUN/build/MiniVaultBuggy__harness.sol",
+  "command": [
+    "/opt/homebrew/bin/solc",
+    "--model-checker-engine",
+    "chc",
+    "--model-checker-targets",
+    "assert",
+    "--model-checker-solvers",
+    "z3",
+    "--model-checker-timeout",
+    "20000",
+    "--model-checker-ext-calls",
+    "untrusted",
+    "/Users/akkedeline/sheaf/cycle/measurement/artifacts/tcg_runs/MiniVaultBuggy-RUN/build/MiniVaultBuggy__harness.sol"
+  ]
+}

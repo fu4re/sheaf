@@ -1,0 +1,44 @@
+#Top
+[Warning] Compiler: Variable 'EC' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(22,14,22,16)
+	22 |	    <ethC>   EC </ethC>
+	   .	             ^~
+[Warning] Compiler: Variable 'EU' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(23,14,23,16)
+	23 |	    <ethU>   EU </ethU>
+	   .	             ^~
+[Warning] Compiler: Variable 'S' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(25,14,25,15)
+	25 |	    <sumOth> S  </sumOth>
+	   .	             ^
+[Warning] Compiler: Variable 'B0' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(39,24,39,26)
+	39 |	    requires BAL ==Int B0 +Int A                        // Post₁ without
+B0>=0
+	   .	                       ^~
+[Warning] Compiler: Variable 'EC' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(48,14,48,16)
+	48 |	    <ethC>   EC </ethC>
+	   .	             ^~
+[Warning] Compiler: Variable 'EU' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(49,14,49,16)
+	49 |	    <ethU>   EU </ethU>
+	   .	             ^~
+[Warning] Compiler: Variable 'S' defined but not used. Prefix variable name
+with underscore if this is intentional.
+	Source(/Users/akkedeline/sheaf/kprove-test/repro/spike-d-z3/z3-junction-spec.k)
+	Location(51,14,51,15)
+	51 |	    <sumOth> S  </sumOth>
+	   .	             ^

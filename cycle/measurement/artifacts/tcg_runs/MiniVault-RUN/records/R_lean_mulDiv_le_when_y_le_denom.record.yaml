@@ -1,0 +1,22 @@
+record_id: R_lean_mulDiv_le_when_y_le_denom
+kind: lean_theorem
+produced_by:
+  component: lean
+  project: cycle/trusted/proofs/aave_arith
+subject:
+  human: mulDiv_le_when_y_le_denom
+  formal: y ≤ d → mulDiv x y d ≤ x
+result:
+  verdict: proven
+  engine: Lean 4 + Mathlib
+  reproduce: lake build
+artifacts:
+- cycle/trusted/proofs/aave_arith/AaveArith/Basic.lean
+extra:
+  theorem_name: AaveArith.mulDiv_le_left
+  build_status: ok
+  axioms:
+  - Quot.sound
+  - propext
+  axiom_audit: clean
+  lean_project: cycle/trusted/proofs/aave_arith

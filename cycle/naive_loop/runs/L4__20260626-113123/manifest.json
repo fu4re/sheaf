@@ -1,0 +1,54 @@
+[
+  {
+    "file": "inv_dai_conservation.sol",
+    "name": "dai_conservation",
+    "informal": "Sum dai[u] == debt — no Dai created from thin air. Every dai balance change is matched by an equal change to debt.",
+    "class": "quantified",
+    "used_ghost": true,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Ghost accumulator ghost_sumDai tracks Sum dai[u]. Checked-arithmetic abstraction of Vat math (semantically equivalent, solver-tractable). 5 VCs proved safe by CHC/z3. Vacuity confirmed: mutated assert(ghost_sumDai == debt + 1) yields counterexample."
+  },
+  {
+    "file": "inv_debt_solvency.sol",
+    "name": "debt_solvency",
+    "informal": "debt == vice + Sum_i(Art_i * rate_i) — every Dai is backed by a CDP or accounted as system bad debt.",
+    "class": "quantified",
+    "used_ghost": true,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Ghost accumulator ghost_sumArtRate tracks Sum_i(Art_i * rate_i) via deltas. frob/fold change debt and ghost equally; grab transfers between vice and ghost; heal/suck change debt and vice equally. 6 VCs proved safe. Vacuity confirmed."
+  },
+  {
+    "file": "inv_sin_conservation.sol",
+    "name": "sin_conservation",
+    "informal": "Sum sin[u] == vice — system bad debt accounting is conservative.",
+    "class": "quantified",
+    "used_ghost": true,
+    "used_snapshot": false,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Ghost accumulator ghost_sumSin tracks Sum sin[u]. grab/heal/suck each change sin[w] and vice by identical amounts. 4 VCs proved safe. Vacuity confirmed."
+  },
+  {
+    "file": "inv_fee_monotonic.sol",
+    "name": "fee_monotonic",
+    "informal": "fold with non-negative rate delta never decreases debt — backed debt only grows when rates increase.",
+    "class": "temporal",
+    "used_ghost": false,
+    "used_snapshot": true,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Pre-state snapshot of debt; verbatim Vat fold logic with require(rate_delta >= 0). Art >= 0 (uint) and rate_delta >= 0 implies rad >= 0 implies debt_new >= debt_old. 1 VC proved safe. Vacuity confirmed with mutated assert(debt < debt_old) yielding counterexample."
+  }
+]

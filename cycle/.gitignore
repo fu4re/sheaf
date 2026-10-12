@@ -1,0 +1,15 @@
+# Python
+__pycache__/
+*.pyc
+
+# Foundry
+out/
+cache/
+
+# Lean / Lake build artifacts (Mathlib oleans ~5.7GB — never commit; reproducible via `lake exe cache get`)
+.lake/
+trusted/proofs/**/.lake/
+
+# Generated harnesses are reproducible from the orchestrator; keep spec/verdict
+# artifacts (the research deliverables), drop the intermediate build dir.
+measurement/artifacts/build/

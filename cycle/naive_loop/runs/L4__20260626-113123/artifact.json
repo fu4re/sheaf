@@ -1,0 +1,132 @@
+{
+  "level": "L4",
+  "run_id": "20260626-113123",
+  "model": "opus",
+  "max_turns": 110,
+  "telemetry": {
+    "solc_invocations": 19,
+    "halmos_invocations": 0,
+    "forge_invocations": 0,
+    "num_turns": 39,
+    "cost_usd": 1.39819525,
+    "duration_ms": 961648,
+    "result_text": "## Summary\n\nAll four canonical economic invariants of the MakerDAO Vat were **machine-proved safe** by solc's CHC/z3 engine, and each proof was **vacuity-checked** by mutating the invariant and confirming the solver produces a counterexample:\n\n1. **`dai_conservation`** (quantified) — `Sum dai[u] == debt`. Ghost accumulator `ghost_sumDai` tracks the mapping sum; every Vat function that touches `dai` or `debt` (move, frob, fold, heal, suck) is modeled as a checked-arithmetic operation that updates both `debt` and `ghost_sumDai` by identical deltas. 5 VCs proved safe.\n\n2. **`debt_solvency`** (quantified) — `debt == vice + Sum_i(Art_i * rate_i)`. Ghost accumulator `ghost_sumArtRate` tracks the nonlinear sum via delta updates: frob/fold change `debt` and `ghost` equally; grab transfers between `vice` and `ghost`; heal/suck change `debt` and `vice` equally. 6 VCs proved safe.\n\n3. **`sin_conservation`** (quantified) — `Sum sin[u] == vice`. Ghost accumulator `ghost_sumSin` mirrors every mutation to `sin[]` and `vice` (grab, heal, suck). 4 VCs proved safe.\n\n4. **`fee_monotonic`** (temporal/2-state) — `fold` with non-negative rate delta never decreases `debt`. Pre-state snapshot with verbatim Vat fold arithmetic; since `Art >= 0` (uint) and `rate_delta >= 0`, the product `rad >= 0`, so `debt` cannot decrease. 1 VC proved safe.\n\nThe quantified invariants used Solidity 0.8 checked arithmetic as a sound abstraction of the Vat's `unchecked`+`require` math helpers (both semantics revert on identical overflow/underflow conditions), which was necessary for CHC solver tractability. The fee_monotonic harness used the Vat's original math verbatim with free state setters to model arbitrary reachable states.",
+    "is_error": false,
+    "session_id": "c0f37a34-6e91-48b1-90e0-1603f1afe3d6",
+    "agent_returncode": 0,
+    "wall_s": 963.2
+  },
+  "judge": {
+    "level": "L4",
+    "n_canonical": 4,
+    "proved_count": 4,
+    "proved_rate": 1.0,
+    "proved_clean_count": 4,
+    "proved_clean_rate": 1.0,
+    "false_proven_count": 0,
+    "false_proven_names": [],
+    "proved_names": [
+      "dai_conservation",
+      "debt_solvency",
+      "sin_conservation",
+      "fee_monotonic"
+    ],
+    "self_harness_used": 4,
+    "by_class": {
+      "quantified": {
+        "total": 3,
+        "proved": 3
+      },
+      "temporal": {
+        "total": 1,
+        "proved": 1
+      }
+    },
+    "results": [
+      {
+        "name": "dai_conservation",
+        "class": "quantified",
+        "linearizable_by_synthesis": false,
+        "bucket": "proved",
+        "vacuity_probe_R": {
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "false_proven": false,
+        "agent_verdict": "proved",
+        "used_ghost": true,
+        "used_snapshot": false,
+        "used_assume_abstraction": false,
+        "harness": "inv_dai_conservation.sol",
+        "engine": "chc",
+        "witness": null,
+        "reason": null,
+        "duration_s": 4.774
+      },
+      {
+        "name": "debt_solvency",
+        "class": "quantified",
+        "linearizable_by_synthesis": false,
+        "bucket": "proved",
+        "vacuity_probe_R": {
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "false_proven": false,
+        "agent_verdict": "proved",
+        "used_ghost": true,
+        "used_snapshot": false,
+        "used_assume_abstraction": false,
+        "harness": "inv_debt_solvency.sol",
+        "engine": "chc",
+        "witness": null,
+        "reason": null,
+        "duration_s": 19.831
+      },
+      {
+        "name": "sin_conservation",
+        "class": "quantified",
+        "linearizable_by_synthesis": false,
+        "bucket": "proved",
+        "vacuity_probe_R": {
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "false_proven": false,
+        "agent_verdict": "proved",
+        "used_ghost": true,
+        "used_snapshot": false,
+        "used_assume_abstraction": false,
+        "harness": "inv_sin_conservation.sol",
+        "engine": "chc",
+        "witness": null,
+        "reason": null,
+        "duration_s": 1.141
+      },
+      {
+        "name": "fee_monotonic",
+        "class": "temporal",
+        "linearizable_by_synthesis": false,
+        "bucket": "proved",
+        "vacuity_probe_R": {
+          "result": "PASS",
+          "reachable": true,
+          "vacuous": false
+        },
+        "false_proven": false,
+        "agent_verdict": "proved",
+        "used_ghost": false,
+        "used_snapshot": true,
+        "used_assume_abstraction": false,
+        "harness": "inv_fee_monotonic.sol",
+        "engine": "chc",
+        "witness": null,
+        "reason": null,
+        "duration_s": 0.102
+      }
+    ]
+  }
+}

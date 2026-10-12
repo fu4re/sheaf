@@ -1,0 +1,20 @@
+record_id: R_callee
+kind: smt_solve
+produced_by:
+  component: smtchecker
+  obligation: 2B_delta_discharge
+subject:
+  human: 'the ERC20 callee actually delivers the guarantee the caller assumed: a transfer
+    credits the recipient by at least `amount`'
+  formal: vaultBal_post >= vaultBal + assets
+  shape: temporal-2state
+result:
+  verdict: proven
+  engine: solc 0.8.35 chc+bmc z3
+  reproduce: solc --model-checker-engine all --model-checker-targets assert --model-checker-solvers
+    z3 --model-checker-timeout 20000 <harness>
+  raw_ref: measurement/artifacts/cross_ag__triage.json
+artifacts:
+- trusted/harness/cross/MiniERC20Delta.sol
+extra:
+  mined_weakest_sufficient: at_least

@@ -1,0 +1,41 @@
+[
+  {
+    "file": "inv_fees_monotonic.sol",
+    "name": "fees_monotonic",
+    "informal": "accumulatedFees is non-decreasing across any state transition: deposit, withdraw, or accrual",
+    "class": "temporal",
+    "used_ghost": false,
+    "used_snapshot": true,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Pre-state snapshot of accumulatedFees at function entry; assert post >= pre at exit. Fees only increase in accrual (+=fee) and are untouched in deposit/withdraw. 3/3 VCs proved safe by CHC/z3."
+  },
+  {
+    "file": "inv_accrual_on_balance_change.sol",
+    "name": "accrual_on_balance_change",
+    "informal": "Any balance change in deposit or withdraw implies the internal accrual helper was invoked first",
+    "class": "temporal",
+    "used_ghost": true,
+    "used_snapshot": true,
+    "used_assume_abstraction": false,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Ghost bool _accrualApplied reset to false at function entry, set true by _applyAccrual(). Pre-state snapshot of balance. Assert: balance unchanged OR accrualApplied. 2/2 VCs proved safe by CHC/z3."
+  },
+  {
+    "file": "inv_solvency_with_accrual.sol",
+    "name": "solvency_with_accrual",
+    "informal": "totalAssets >= totalShares is preserved across deposit, withdraw, and accrual operations",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": true,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Inductive invariant: require(totalAssets >= totalShares) as precondition, assert it as postcondition. Deposit adds equally to both; withdraw subtracts equally; accrual only increases totalAssets. 3/3 VCs proved safe by CHC/z3."
+  }
+]

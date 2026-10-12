@@ -1,0 +1,201 @@
+INFO 2026-07-15 16:16:58,450 pyk.utils - [PID=41942][exec] kompile --version
+INFO 2026-07-15 16:16:58,552 pyk.utils - [PID=41942][stdo] K version:    v7.1.337
+INFO 2026-07-15 16:16:58,552 pyk.utils - [PID=41942][stdo] Build date:   Wed Jul 15 13:49:35 MSK 2026
+INFO 2026-07-15 16:16:58,553 pyk.utils - [PID=41942][done] status=0 time=0.103s
+🏃 Running Kontrol proofs 🏃
+INFO 2026-07-15 16:17:00,136 pyk.utils - [PID=41975][exec] which kore-rpc-booster
+INFO 2026-07-15 16:17:00,138 pyk.utils - [PID=41975][stdo] /nix/store/aqjgfc96ra0v1drpil3jlx23frcz5nrb-k-7.1.337-4a46d1231473b599c699160132fd6e76a5c46406/bin/kore-rpc-booster
+INFO 2026-07-15 16:17:00,138 pyk.utils - [PID=41975][done] status=0 time=0.002s
+INFO 2026-07-15 16:17:00,150 kontrol.foundry - Processing contract files: [PosixPath('out/Mapping.sol/D.json'), PosixPath('out/Mapping.t.sol/MappingTest.json')]
+INFO 2026-07-15 16:17:00,152 kontrol.foundry - Creating a new version of test test%MappingTest.test_mapping_precond(uint256) because --reinit was specified.
+INFO 2026-07-15 16:17:00,152 kontrol.prove - For test test%MappingTest.test_mapping_precond(uint256), found external calls: [('D.h(uint256)', None)]
+INFO 2026-07-15 16:17:00,155 pyk.utils - [PID=41976][exec] which kore-rpc-booster
+INFO 2026-07-15 16:17:00,157 pyk.utils - [PID=41976][stdo] /nix/store/aqjgfc96ra0v1drpil3jlx23frcz5nrb-k-7.1.337-4a46d1231473b599c699160132fd6e76a5c46406/bin/kore-rpc-booster
+INFO 2026-07-15 16:17:00,157 pyk.utils - [PID=41976][done] status=0 time=0.001s
+INFO 2026-07-15 16:17:00,157 kontrol.foundry - Creating a new version of test src%D.h(uint256) because --reinit was specified.
+INFO 2026-07-15 16:17:00,158 kontrol.foundry - Creating a new version of test src%D.h(uint256) because --reinit was specified.
+Selected functions: src%D.h(uint256)
+INFO 2026-07-15 16:17:00,158 kontrol.prove - Running tests: ['src%D.h(uint256)']
+INFO 2026-07-15 16:17:00,158 kontrol.prove - Updating digests: ['src%D.h(uint256)']
+INFO 2026-07-15 16:17:00,159 kontrol.solc_to_k - Updated method src%D.h(uint256) in digest file: out/digest
+INFO 2026-07-15 16:17:00,159 kontrol.prove - Updating digests: []
+INFO 2026-07-15 16:17:00,159 kontrol.prove - Running setup functions in parallel: []
+
+INFO 2026-07-15 16:17:00,160 kontrol.prove - Running test functions in parallel: ['src%D.h(uint256)']
+INFO 2026-07-15 16:17:00,161 pyk.utils - Making directory: out/tmp
+INFO 2026-07-15 16:17:00,162 pyk.kore.rpc - Starting KoreServer: kore-rpc-booster out/kompiled/definition.kore --module KONTROL-MAIN --server-port 0 --smt-timeout 300 --smt-retry-limit 10 --llvm-backend-library out/kompiled/llvm-library/interpreter.dylib
+INFO 2026-07-15 16:17:00,210 pyk.kore.rpc - [PID=41977][stde] [proxy] Loading definition from out/kompiled/definition.kore, main module "KONTROL-MAIN"
+INFO 2026-07-15 16:17:01,891 pyk.kore.rpc - [PID=41977][stde] [kore][info] Reading the input file TimeSpec {sec = 0, nsec = 41958000}
+INFO 2026-07-15 16:17:02,922 pyk.kore.rpc - [PID=41977][stde] [kore][info] Parsing the file TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:03,970 pyk.kore.rpc - [PID=41977][stde] [kore][info] Verifying the definition TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:05,331 pyk.kore.rpc - [PID=41977][stde] [kore][info] Executing TimeSpec {sec = 1, nsec = 309011000}
+INFO 2026-07-15 16:17:06,336 pyk.kore.rpc - [PID=41977][stde] [kore][info] Reading the input file TimeSpec {sec = 0, nsec = 41259000}
+INFO 2026-07-15 16:17:06,336 pyk.kore.rpc - [PID=41977][stde] [kore][info] Parsing the file TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:07,625 pyk.kore.rpc - [PID=41977][stde] [kore][info] Verifying the definition TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:07,625 pyk.kore.rpc - [PID=41977][stde] [proxy] Starting RPC server
+INFO 2026-07-15 16:17:07,634 pyk.kore.rpc - KoreServer started: :::65512, pid=41977
+INFO 2026-07-15 16:17:07,634 pyk.kore.rpc - Connecting to host: localhost:65512
+INFO 2026-07-15 16:17:07,635 pyk.kore.rpc - Connected to host: localhost:65512 (local port: 65513)
+INFO 2026-07-15 16:17:07,635 pyk.kast.outer - Loading JSON definition: out/kompiled/compiled.json
+INFO 2026-07-15 16:17:07,853 pyk.kast.outer - Converting JSON definition to Kast: out/kompiled/compiled.json
+INFO 2026-07-15 16:17:08,927 kontrol.prove - Initializing KCFG for test: src%D.h(uint256):0
+WARNING 2026-07-15 16:17:09,039 kontrol.natspec - Array/mapping access not supported yet
+INFO 2026-07-15 16:17:09,045 kontrol.prove - Expanding macros in node 1 for test: src%D.h(uint256)
+INFO 2026-07-15 16:17:09,104 kontrol.prove - Computing definedness constraint for node 1 for test: src%D.h(uint256)
+INFO 2026-07-15 16:17:09,133 pyk.kore.rpc - Sending request to localhost:65512: 4400610128-001 - simplify
+INFO 2026-07-15 16:17:09,634 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4400610128-001
+INFO 2026-07-15 16:17:10,373 pyk.kore.rpc - Received response from localhost:65512: 4400610128-001 - simplify
+INFO 2026-07-15 16:17:10,386 pyk.kore.rpc - Sending request to localhost:65512: 4400610128-002 - simplify
+INFO 2026-07-15 16:17:10,657 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4400610128-002
+INFO 2026-07-15 16:17:11,269 pyk.kore.rpc - Received response from localhost:65512: 4400610128-002 - simplify
+INFO 2026-07-15 16:17:11,282 pyk.kore.rpc - Sending request to localhost:65512: 4400610128-003 - simplify
+INFO 2026-07-15 16:17:11,674 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4400610128-003
+INFO 2026-07-15 16:17:12,389 pyk.kore.rpc - Received response from localhost:65512: 4400610128-003 - simplify
+INFO 2026-07-15 16:17:12,396 kontrol.prove - Expanding macros in target state for test: src%D.h(uint256)
+INFO 2026-07-15 16:17:12,404 pyk.kore.rpc - Sending request to localhost:65512: 4400610128-004 - simplify
+INFO 2026-07-15 16:17:12,684 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4400610128-004
+INFO 2026-07-15 16:17:13,262 pyk.kore.rpc - Received response from localhost:65512: 4400610128-004 - simplify
+INFO 2026-07-15 16:17:13,267 pyk.utils - Making directory: out/proofs/src%D.h(uint256):0/kcfg
+INFO 2026-07-15 16:17:13,267 pyk.utils - Making directory: out/proofs/src%D.h(uint256):0/kcfg/nodes
+INFO 2026-07-15 16:17:13,267 pyk.kore.rpc - Connecting to host: localhost:65512
+INFO 2026-07-15 16:17:13,268 pyk.kore.rpc - Connected to host: localhost:65512 (local port: 65517)
+INFO 2026-07-15 16:17:13,268 pyk.kore.rpc - Sending request to localhost:65512: src%D.h(uint256):0-001 - add-module
+INFO 2026-07-15 16:17:13,689 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request src%D.h(uint256):0-001
+INFO 2026-07-15 16:17:14,516 pyk.kore.rpc - Received response from localhost:65512: src%D.h(uint256):0-001 - add-module
+INFO 2026-07-15 16:17:14,518 pyk.kore.rpc - Connecting to host: localhost:65512
+INFO 2026-07-15 16:17:14,519 pyk.kore.rpc - Connected to host: localhost:65512 (local port: 65520)
+INFO 2026-07-15 16:17:14,531 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-001 - execute
+INFO 2026-07-15 16:17:14,692 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-001
+INFO 2026-07-15 16:17:23,674 pyk.kore.rpc - Received response from localhost:65512: 4803538048-001 - execute
+INFO 2026-07-15 16:17:23,715 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 770: 1 --> 3
+INFO 2026-07-15 16:17:23,716 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:23,734 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-002 - execute
+INFO 2026-07-15 16:17:23,739 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-002
+INFO 2026-07-15 16:17:29,436 pyk.kore.rpc - Received response from localhost:65512: 4803538048-002 - execute
+INFO 2026-07-15 16:17:29,463 pyk.kcfg.kcfg - Extending KCFG with: 2 branches: 3 --> [4, 5]: ['KV0_x:Int +Int #lookup ( C_D_STORAGE:Map , 78338746147236970124700731725183845421594913511827187288591969170390706184117 ) <Int pow256', 'pow256 <=Int KV0_x:Int +Int #lookup ( C_D_STORAGE:Map , 78338746147236970124700731725183845421594913511827187288591969170390706184117 )']
+INFO 2026-07-15 16:17:29,466 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:29,484 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-003 - execute
+INFO 2026-07-15 16:17:29,490 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-003
+INFO 2026-07-15 16:17:32,096 pyk.kore.rpc - Received response from localhost:65512: 4803538048-003 - execute
+INFO 2026-07-15 16:17:32,112 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 314: 4 --> 6
+INFO 2026-07-15 16:17:32,118 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-004 - execute
+INFO 2026-07-15 16:17:32,121 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:32,125 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-004
+INFO 2026-07-15 16:17:33,659 pyk.kore.rpc - Received response from localhost:65512: 4803538048-004 - execute
+INFO 2026-07-15 16:17:33,674 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 56: 5 --> 7
+INFO 2026-07-15 16:17:33,732 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-005 - implies
+INFO 2026-07-15 16:17:33,732 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:33,745 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-005
+INFO 2026-07-15 16:17:34,931 pyk.kore.rpc - Received response from localhost:65512: 4803538048-005 - implies
+INFO 2026-07-15 16:17:34,941 pyk.proof.reachability - Subsumed into target node src%D.h(uint256):0: (6, 2)
+INFO 2026-07-15 16:17:34,986 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:35,011 pyk.kore.rpc - Sending request to localhost:65512: 4803538048-006 - implies
+INFO 2026-07-15 16:17:35,016 pyk.kore.rpc - [PID=41977][stde] [proxy] Processing request 4803538048-006
+INFO 2026-07-15 16:17:36,262 pyk.kore.rpc - Received response from localhost:65512: 4803538048-006 - implies
+INFO 2026-07-15 16:17:36,272 pyk.proof.reachability - Subsumed into target node src%D.h(uint256):0: (7, 2)
+INFO 2026-07-15 16:17:36,276 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:36,281 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:36,283 kevm_pyk.utils - Proof status src%D.h(uint256):0: ProofStatus.PASSED
+INFO 2026-07-15 16:17:36,293 pyk.proof.reachability - Wrote proof data for src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+INFO 2026-07-15 16:17:36,298 pyk.kore.rpc - Stopping KoreServer: :::65512, pid=41977
+INFO 2026-07-15 16:17:36,311 pyk.kore.rpc - KoreServer stopped: :::65512, pid=41977
+INFO 2026-07-15 16:17:36,312 pyk.proof.proof - Reading APRProof from file src%D.h(uint256):0: out/proofs/src%D.h(uint256):0/proof.json
+
+INFO 2026-07-15 16:17:36,530 kontrol.foundry - Creating a new version of test test%MappingTest.test_mapping_precond(uint256) because --reinit was specified.
+Selected functions: test%MappingTest.test_mapping_precond(uint256)
+INFO 2026-07-15 16:17:36,531 kontrol.foundry - Creating a new version of test%MappingTest.setUp() because it was updated.
+INFO 2026-07-15 16:17:36,531 kontrol.prove - Running tests: ['test%MappingTest.test_mapping_precond(uint256)']
+INFO 2026-07-15 16:17:36,531 kontrol.prove - Updating digests: ['test%MappingTest.test_mapping_precond(uint256)']
+INFO 2026-07-15 16:17:36,531 kontrol.solc_to_k - Updated method test%MappingTest.test_mapping_precond(uint256) in digest file: out/digest
+INFO 2026-07-15 16:17:36,531 kontrol.prove - Updating digests: ['test%MappingTest.setUp()']
+INFO 2026-07-15 16:17:36,531 kontrol.solc_to_k - Updated method test%MappingTest.setUp() in digest file: out/digest
+INFO 2026-07-15 16:17:36,531 kontrol.prove - Running setup functions in parallel: ['test%MappingTest.setUp()']
+INFO 2026-07-15 16:17:36,532 pyk.kore.rpc - Starting KoreServer: kore-rpc-booster out/kompiled/definition.kore --module KONTROL-MAIN --server-port 0 --smt-timeout 300 --smt-retry-limit 10 --llvm-backend-library out/kompiled/llvm-library/interpreter.dylib
+INFO 2026-07-15 16:17:36,550 pyk.kore.rpc - [PID=42292][stde] [proxy] Loading definition from out/kompiled/definition.kore, main module "KONTROL-MAIN"
+INFO 2026-07-15 16:17:37,735 pyk.kore.rpc - [PID=42292][stde] [kore][info] Reading the input file TimeSpec {sec = 0, nsec = 40989000}
+INFO 2026-07-15 16:17:38,745 pyk.kore.rpc - [PID=42292][stde] [kore][info] Parsing the file TimeSpec {sec = 0, nsec = 1000}
+INFO 2026-07-15 16:17:39,813 pyk.kore.rpc - [PID=42292][stde] [kore][info] Verifying the definition TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:41,137 pyk.kore.rpc - [PID=42292][stde] [kore][info] Executing TimeSpec {sec = 1, nsec = 272870000}
+INFO 2026-07-15 16:17:42,143 pyk.kore.rpc - [PID=42292][stde] [kore][info] Reading the input file TimeSpec {sec = 0, nsec = 41169000}
+INFO 2026-07-15 16:17:42,143 pyk.kore.rpc - [PID=42292][stde] [kore][info] Parsing the file TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:43,440 pyk.kore.rpc - [PID=42292][stde] [kore][info] Verifying the definition TimeSpec {sec = 0, nsec = 0}
+INFO 2026-07-15 16:17:43,440 pyk.kore.rpc - [PID=42292][stde] [proxy] Starting RPC server
+INFO 2026-07-15 16:17:43,441 pyk.kore.rpc - KoreServer started: :::49172, pid=42292
+INFO 2026-07-15 16:17:43,441 pyk.kore.rpc - Connecting to host: localhost:49172
+INFO 2026-07-15 16:17:43,442 pyk.kore.rpc - Connected to host: localhost:49172 (local port: 49173)
+INFO 2026-07-15 16:17:43,442 kontrol.prove - Initializing KCFG for test: test%MappingTest.setUp():0
+INFO 2026-07-15 16:17:43,454 kontrol.prove - Expanding macros in node 1 for test: test%MappingTest.setUp()
+INFO 2026-07-15 16:17:43,519 kontrol.prove - Computing definedness constraint for node 1 for test: test%MappingTest.setUp()
+INFO 2026-07-15 16:17:43,536 pyk.kore.rpc - Sending request to localhost:49172: src%D.h(uint256):0-001 - simplify
+INFO 2026-07-15 16:17:44,443 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request src%D.h(uint256):0-001
+INFO 2026-07-15 16:17:44,585 pyk.kore.rpc - Received response from localhost:49172: src%D.h(uint256):0-001 - simplify
+INFO 2026-07-15 16:17:44,601 pyk.kore.rpc - Sending request to localhost:49172: src%D.h(uint256):0-002 - simplify
+INFO 2026-07-15 16:17:45,462 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request src%D.h(uint256):0-002
+INFO 2026-07-15 16:17:45,485 pyk.kore.rpc - Received response from localhost:49172: src%D.h(uint256):0-002 - simplify
+INFO 2026-07-15 16:17:45,501 pyk.kore.rpc - Sending request to localhost:49172: src%D.h(uint256):0-003 - simplify
+INFO 2026-07-15 16:17:46,494 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request src%D.h(uint256):0-003
+INFO 2026-07-15 16:17:46,524 pyk.kore.rpc - Received response from localhost:49172: src%D.h(uint256):0-003 - simplify
+INFO 2026-07-15 16:17:46,532 kontrol.prove - Expanding macros in target state for test: test%MappingTest.setUp()
+INFO 2026-07-15 16:17:46,540 pyk.kore.rpc - Sending request to localhost:49172: src%D.h(uint256):0-004 - simplify
+INFO 2026-07-15 16:17:47,454 pyk.kore.rpc - Received response from localhost:49172: src%D.h(uint256):0-004 - simplify
+INFO 2026-07-15 16:17:47,458 pyk.utils - Making directory: out/proofs/test%MappingTest.setUp():0/kcfg
+INFO 2026-07-15 16:17:47,458 pyk.utils - Making directory: out/proofs/test%MappingTest.setUp():0/kcfg/nodes
+INFO 2026-07-15 16:17:47,458 pyk.kore.rpc - Connecting to host: localhost:49172
+INFO 2026-07-15 16:17:47,462 pyk.kore.rpc - Connected to host: localhost:49172 (local port: 49176)
+INFO 2026-07-15 16:17:47,462 pyk.kore.rpc - Sending request to localhost:49172: test%MappingTest.setUp():0-001 - add-module
+INFO 2026-07-15 16:17:47,494 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request src%D.h(uint256):0-004
+INFO 2026-07-15 16:17:47,494 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request test%MappingTest.setUp():0-001
+INFO 2026-07-15 16:17:48,907 pyk.kore.rpc - Received response from localhost:49172: test%MappingTest.setUp():0-001 - add-module
+INFO 2026-07-15 16:17:48,910 pyk.kore.rpc - Connecting to host: localhost:49172
+INFO 2026-07-15 16:17:48,911 pyk.kore.rpc - Connected to host: localhost:49172 (local port: 49177)
+INFO 2026-07-15 16:17:48,926 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-001 - execute
+INFO 2026-07-15 16:17:48,932 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-001
+INFO 2026-07-15 16:17:56,277 pyk.kore.rpc - Received response from localhost:49172: 4785920496-001 - execute
+INFO 2026-07-15 16:17:56,314 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 230: 1 --> 3
+INFO 2026-07-15 16:17:56,315 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:17:56,334 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-002 - execute
+INFO 2026-07-15 16:17:56,341 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-002
+INFO 2026-07-15 16:18:02,625 pyk.kore.rpc - Received response from localhost:49172: 4785920496-002 - execute
+INFO 2026-07-15 16:18:02,664 pyk.kcfg.kcfg - Extending KCFG with: 3 non-deterministic branches: 3 --> [4, 5, 6]
+INFO 2026-07-15 16:18:02,665 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:02,687 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-003 - execute
+INFO 2026-07-15 16:18:02,693 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-003
+INFO 2026-07-15 16:18:07,843 pyk.kore.rpc - Received response from localhost:49172: 4785920496-003 - execute
+INFO 2026-07-15 16:18:08,067 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-004 - execute
+INFO 2026-07-15 16:18:08,068 pyk.kcfg.kcfg - Extending KCFG with: 2 branches: 4 --> [7, 8]: ['notBool C_MAPPINGTEST_ID:Int ==K NEWCALLER_CELL:Account andBool ACTIVE_CELL:Bool andBool DEPTH_CELL:Int ==Int EXPECTEDDEPTH_CELL:Int', 'notBool C_MAPPINGTEST_D_ID:Int ==Int C_MAPPINGTEST_ID:Int']
+INFO 2026-07-15 16:18:08,069 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:08,075 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-004
+INFO 2026-07-15 16:18:14,385 pyk.kore.rpc - Received response from localhost:49172: 4785920496-004 - execute
+INFO 2026-07-15 16:18:14,429 pyk.kcfg.kcfg - Extending KCFG with: 3 non-deterministic branches: 5 --> [9, 10, 11]
+INFO 2026-07-15 16:18:14,440 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-005 - execute
+INFO 2026-07-15 16:18:14,442 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:14,450 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-005
+INFO 2026-07-15 16:18:19,786 pyk.kore.rpc - Received response from localhost:49172: 4785920496-005 - execute
+INFO 2026-07-15 16:18:19,813 pyk.proof.reachability - Caching next step for edge starting from 6
+INFO 2026-07-15 16:18:19,823 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 7: 6 --> 12
+INFO 2026-07-15 16:18:19,832 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-006 - execute
+INFO 2026-07-15 16:18:19,833 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:19,840 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-006
+INFO 2026-07-15 16:18:28,260 pyk.kore.rpc - Received response from localhost:49172: 4785920496-006 - execute
+INFO 2026-07-15 16:18:28,292 pyk.proof.reachability - Caching next step for edge starting from 7
+INFO 2026-07-15 16:18:28,302 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 1: 7 --> 13
+INFO 2026-07-15 16:18:28,311 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-007 - execute
+INFO 2026-07-15 16:18:28,312 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:28,318 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-007
+INFO 2026-07-15 16:18:33,438 pyk.kore.rpc - Received response from localhost:49172: 4785920496-007 - execute
+INFO 2026-07-15 16:18:33,488 pyk.kcfg.kcfg - Extending KCFG with: 2 branches: 8 --> [14, 15]: ['notBool C_MAPPINGTEST_ID:Int ==K NEWCALLER_CELL:Account andBool ACTIVE_CELL:Bool andBool DEPTH_CELL:Int ==Int EXPECTEDDEPTH_CELL:Int', 'notBool C_MAPPINGTEST_D_ID:Int ==Int C_MAPPINGTEST_ID:Int']
+INFO 2026-07-15 16:18:33,490 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-008 - execute
+INFO 2026-07-15 16:18:33,491 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:33,498 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-008
+INFO 2026-07-15 16:18:40,187 pyk.kore.rpc - Received response from localhost:49172: 4785920496-008 - execute
+INFO 2026-07-15 16:18:40,394 pyk.proof.reachability - Caching next step for edge starting from 9
+INFO 2026-07-15 16:18:40,403 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 4: 9 --> 16
+INFO 2026-07-15 16:18:40,413 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-009 - execute
+INFO 2026-07-15 16:18:40,414 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:40,419 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-009
+INFO 2026-07-15 16:18:46,919 pyk.kore.rpc - Received response from localhost:49172: 4785920496-009 - execute
+INFO 2026-07-15 16:18:46,959 pyk.proof.reachability - Caching next step for edge starting from 10
+INFO 2026-07-15 16:18:46,969 pyk.kcfg.kcfg - Extending KCFG with: basic block at depth 4: 10 --> 17
+INFO 2026-07-15 16:18:46,979 pyk.kore.rpc - Sending request to localhost:49172: 4785920496-010 - execute
+INFO 2026-07-15 16:18:46,980 pyk.proof.reachability - Wrote proof data for test%MappingTest.setUp():0: out/proofs/test%MappingTest.setUp():0/proof.json
+INFO 2026-07-15 16:18:46,985 pyk.kore.rpc - [PID=42292][stde] [proxy] Processing request 4785920496-010

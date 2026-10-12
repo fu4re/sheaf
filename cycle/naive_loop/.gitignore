@@ -1,0 +1,4 @@
+# Per-run sandboxes + transcripts are committed as evidence for Finding 0006
+# (harnesses, transcript.jsonl, artifact.json); Foundry out/ and cache/ inside
+# them are ignored by the root .gitignore.
+__pycache__/

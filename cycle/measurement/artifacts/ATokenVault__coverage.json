@@ -1,0 +1,82 @@
+{
+  "coverage": [
+    {
+      "ground_truth_id": "conservation_shares",
+      "status": "partial",
+      "matched_agent_name": "per_account_share_conservation",
+      "note": "Agent only checks balanceOf(receiver) <= totalSupply(), not the full sum invariant sumAllBalance() == totalSupply(). The equality over all users is missed."
+    },
+    {
+      "ground_truth_id": "balance_leq_supply",
+      "status": "recovered",
+      "matched_agent_name": "per_account_share_conservation",
+      "note": "Direct match: balanceOf(receiver) <= totalSupply()."
+    },
+    {
+      "ground_truth_id": "solvency",
+      "status": "recovered",
+      "matched_agent_name": "solvency_nonzero_supply",
+      "note": "Agent expresses totalSupply() == 0 || totalAssets() > 0, which is logically equivalent to totalSupply() != 0 => totalAssets() != 0 (agent uses > 0, expert uses != 0, but for uint these are identical)."
+    },
+    {
+      "ground_truth_id": "fees_backed",
+      "status": "recovered",
+      "matched_agent_name": "fee_bounded_by_atoken_holdings",
+      "note": "Direct match: getClaimableFees() <= ATOKEN.balanceOf(address(this))."
+    },
+    {
+      "ground_truth_id": "accounting_leq_real_balance",
+      "status": "recovered",
+      "matched_agent_name": "last_vault_balance_le_actual",
+      "note": "Direct match: getLastVaultBalance() <= ATOKEN.balanceOf(address(this))."
+    },
+    {
+      "ground_truth_id": "fees_monotonic",
+      "status": "missed",
+      "matched_agent_name": null,
+      "note": "No agent invariant captures the monotonicity of accumulatedFees (fees only increase, never decrease)."
+    },
+    {
+      "ground_truth_id": "balance_change_causes_accrual",
+      "status": "missed",
+      "matched_agent_name": null,
+      "note": "No agent invariant addresses the causal relationship between balance changes and yield accrual triggering."
+    }
+  ],
+  "extra_agent_invariants": [
+    "accounting_identity",
+    "fee_rate_bounded_by_scale",
+    "total_assets_net_of_fees_non_negative",
+    "shares_backed_proportionally"
+  ],
+  "summary": {
+    "recovered": 4,
+    "partial": 1,
+    "missed": 2,
+    "coverage_pct": 64
+  },
+  "_provenance": {
+    "backend": "claude -p",
+    "model_requested": "sonnet",
+    "session_id": "8d177f58-b027-4cb0-9a83-3a82323b9ec6",
+    "usage": {
+      "input_tokens": 3,
+      "cache_creation_input_tokens": 3034,
+      "cache_read_input_tokens": 4131,
+      "output_tokens": 704,
+      "server_tool_use": {
+        "web_search_requests": 0,
+        "web_fetch_requests": 0
+      },
+      "service_tier": "standard",
+      "cache_creation": {
+        "ephemeral_1h_input_tokens": 3034,
+        "ephemeral_5m_input_tokens": 0
+      },
+      "inference_geo": "",
+      "iterations": [],
+      "speed": "standard"
+    },
+    "cost_usd": 0.0231858
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "contract": "MiniVaultBuggy",
+  "method": "deposit",
+  "spec_source": "replay:MiniVaultBuggy__spec.seed.json",
+  "invariant": {
+    "name": "shares_backed_by_assets",
+    "solidity_expr": "totalShares == totalAssets",
+    "kind": "contract_invariant",
+    "informal": "every share is backed by an asset unit; no value minted from air"
+  },
+  "gateway": {
+    "mode": "subclass",
+    "harness": "measurement/artifacts/build/MiniVaultBuggy__harness.sol",
+    "compiles": true
+  },
+  "verdict": {
+    "verdict": "counterexample",
+    "witness": {
+      "assignments": {
+        "totalAssets": "0",
+        "totalShares": "1"
+      },
+      "transaction_trace": [
+        "__Harness.constructor()",
+        "State: totalAssets = 0, totalShares = 0",
+        "MiniVaultBuggy.deposit(0)",
+        "State: totalAssets = 0, totalShares = 1",
+        "__Harness.__check_invariant()",
+        "31 |         assert(totalShares == totalAssets);"
+      ]
+    },
+    "reason": null,
+    "engine": "chc",
+    "solvers": [
+      "z3"
+    ],
+    "targets": [
+      "assert"
+    ],
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "command": [
+      "/opt/homebrew/bin/solc",
+      "--model-checker-engine",
+      "chc",
+      "--model-checker-targets",
+      "assert",
+      "--model-checker-solvers",
+      "z3",
+      "--model-checker-timeout",
+      "0",
+      "/Users/akkedeline/sheaf/cycle/measurement/artifacts/build/MiniVaultBuggy__harness.sol"
+    ],
+    "duration_s": 0.518,
+    "raw": "Warning: CHC: Assertion violation happens here.\nCounterexample:\ntotalAssets = 0, totalShares = 1\n\nTransaction trace:\n__Harness.constructor()\nState: totalAssets = 0, totalShares = 0\nMiniVaultBuggy.deposit(0)\nState: totalAssets = 0, totalShares = 1\n__Harness.__check_invariant()\n  --> measurement/artifacts/build/MiniVaultBuggy__harness.sol:31:9:\n   |\n31 |         assert(totalShares == totalAssets);\n   |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
+  },
+  "ground_truth_delta": {
+    "match": "exact",
+    "proposed_expr": "totalShares == totalAssets",
+    "canonical_expr": "totalShares == totalAssets",
+    "proposed_normalized": "totalAssets==totalShares",
+    "canonical_normalized": "totalAssets==totalShares"
+  },
+  "provenance": {
+    "backend": "seed",
+    "model_requested": "none"
+  }
+}

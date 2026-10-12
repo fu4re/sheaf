@@ -1,0 +1,44 @@
+kore-exec: [140367] Warning (WarnStuckClaimState):
+    The configuration's term unifies with the destination's term, but the implication check between the conditions has failed. Location: /Users/akkedeline/sheaf/kprove-test/repro/t3-q1/q1-disc-V-spec.k:24:5-28:32
+Context:
+    (InfoReachability) while checking the implication
+  #Not ( {
+    B_PRE
+  #Equals
+    B_PRE -Int APRIME
+  } )
+#And
+  <T>
+    <k>
+      #done ~> .K
+    </k>
+    <balU>
+      _Gen6
+    </balU>
+    <sumOth>
+      _Gen7
+    </sumOth>
+    <ethC>
+      _Gen8
+    </ethC>
+    <ethU>
+      _Gen9
+    </ethU>
+    <amt>
+      _Gen10
+    </amt>
+  </T>
+#And
+  {
+    true
+  #Equals
+    APRIME >=Int 1
+  }
+#And
+  {
+    true
+  #Equals
+    B_PRE >=Int APRIME
+  }
+[Error] Prover: backend terminated because the configuration cannot be
+rewritten further. See output for more details.

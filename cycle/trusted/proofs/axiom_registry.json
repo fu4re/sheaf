@@ -1,0 +1,97 @@
+{
+  "_bridge_level": 1,
+  "_note": "Level-1 bridge (Task 0002, Goal C). Trusted base = 'the CVL axiom statement equals the statement of the proven Lean theorem' — a human text-match of formulations, NOT a single-formalism (level-2) bridge. Stronger than an axiom-on-faith, weaker than end-to-end. D3 (level 2) is explicitly out of scope.",
+  "prover": {
+    "system": "Lean 4 + Mathlib",
+    "lean": "4.31.0",
+    "mathlib": "v4.31.0",
+    "project": "cycle/trusted/proofs/aave_arith",
+    "file": "AaveArith/Basic.lean"
+  },
+  "model": "mulDiv(x,y,d) := floor(x*y / d) over ℕ. uint256 modelled as ℕ; the non-overflow side-condition (x*y < 2^256) is deferred — see trusted_base_caveat.",
+  "discharged": [
+    {
+      "id": "mulDiv_round_down",
+      "cvl_source": "ground_truth/aave_vault/certora_specs/fees_LEQ_ATokenBal.spec (ghost mulDiv4_g)",
+      "cvl_statement": "mulDiv4_g(x,y,denom) * denom <= x*y",
+      "lean_theorem": "AaveArith.mulDiv_mul_le",
+      "lean_statement": "mulDiv x y d * d ≤ x * y",
+      "status": "proven"
+    },
+    {
+      "id": "mulDiv_le_when_y_le_denom",
+      "cvl_source": "ground_truth/aave_vault/certora_specs/fees_LEQ_ATokenBal.spec (ghost mulDiv4_g)",
+      "cvl_statement": "y <= denom => mulDiv4_g(x,y,denom) <= x",
+      "lean_theorem": "AaveArith.mulDiv_le_left",
+      "lean_statement": "y ≤ d → mulDiv x y d ≤ x",
+      "status": "proven",
+      "note": "This is EXACTLY the frozen axiom `mintedShares <= assets` that trusted/harness/ProportionalVaultGhost.sol (Slice 2) assumed on faith — now a theorem."
+    },
+    {
+      "id": "mulDiv_zero_preservation",
+      "cvl_source": "ground_truth/aave_vault/certora_specs/positiveSupply_imply_positiveAssets.spec (ghost mulDiv4_g)",
+      "cvl_statement": "(x==0 || y==0) => mulDiv4_g(x,y,denom)==0",
+      "lean_theorem": "AaveArith.mulDiv_eq_zero",
+      "lean_statement": "(x = 0 ∨ y = 0) → mulDiv x y d = 0",
+      "status": "proven"
+    },
+    {
+      "id": "product_delta_distributivity",
+      "used_by": "trusted/harness/VatSolvency.sol (ghostAR faithfulness)",
+      "math_statement": "(Art + dart) * rate == Art*rate + dart*rate",
+      "informal": "when Art changes by dart, the product Art·rate changes by dart·rate (= Vat's dtab) — this is what makes the ghostAR shadow of Σ(Art·rate) faithful, not assumed",
+      "lean_theorem": "AaveArith.ar_delta",
+      "lean_statement": "(Art + dart) * rate = Art * rate + dart * rate   (over ℤ)",
+      "status": "proven"
+    },
+    {
+      "id": "erc20_transfer_sum_preserved",
+      "task": "0003_cross_contract_assume_guarantee",
+      "used_by": "trusted/harness/cross/MiniERC20Conservation.sol (ghostSum faithfulness: shadow untouched on transfer) + trusted/harness/cross/VaultAssetAG.sol (caller A/G summary: the transfer moves the vault balance by exactly `assets`)",
+      "guarantee_role": "CALLEE guarantee G_B of the assume-guarantee decomposition — the property the caller A is allowed to assume about the external ERC20 B at the call site",
+      "math_statement": "for src != dst and amt <= bal[src]: (bal[src]-amt) + (bal[dst]+amt) == bal[src]+bal[dst]; hence Σ balanceOf is invariant under transfer (ghostSum == totalSupply preserved)",
+      "informal": "ERC20 transfer conserves Σ balanceOf — the faithfulness fact the tracked-sum ghost relies on, and the per-account delta the cross-contract caller summary assumes. The cross-contract analogue of ar_delta.",
+      "lean_theorem": "Erc20.transfer_pair_sum_preserved (+ Erc20.transfer_sum_preserved for the Σ-over-Finset form)",
+      "lean_statement": "(a - amt) + (b + amt) = a + b   (over ℕ, amt ≤ a);   and   ∑_{x∈s} update (update f src (f src - amt)) dst (f dst + amt) x = ∑_{x∈s} f x",
+      "status": "proven",
+      "note": "Second case (after ar_delta) where a Lean theorem closes the trusted base of a REAL invariant — now the CALLEE GUARANTEE of an assume-guarantee decomposition (Task 0003), not just a self-contained ghost. #print axioms: only [propext, Classical.choice, Quot.sound] — no sorry, no contract axiom."
+    },
+    {
+      "id": "mulDiv_tightness",
+      "source": "promoted from not_yet_discharged (Finding 0008, Task 0014 Step 0)",
+      "math_statement": "0 < d => x*y < (mulDiv(x,y,d)+1)*d",
+      "informal": "no-slack upper bracket: mulDiv rounds down by strictly less than one denominator. With mulDiv_round_down gives the EXACT bracket mulDiv*d <= x*y < (mulDiv+1)*d.",
+      "lean_theorem": "AaveArith.mulDiv_tightness",
+      "lean_statement": "0 < d → x * y < (mulDiv x y d + 1) * d",
+      "status": "proven",
+      "discharged_by": "neural generator (F0008), kernel-admitted; #print axioms ⊆ {propext, Quot.sound}"
+    },
+    {
+      "id": "rayMul_bounds",
+      "source": "promoted from not_yet_discharged (Finding 0008, Task 0014 Step 0)",
+      "cvl_source": "Aave ray-math bounds postulated in Certora specs — now theorems",
+      "math_statement": "RAY <= index => x <= rayMul(x,index);  index <= 2*RAY => rayMul(x,index) <= 2*x",
+      "informal": "rayMul(x,index)=floor(x*index/RAY) is bounded below by x when index>=RAY and above by 2x when index<=2*RAY — exactly the fixed-point bounds Aave's Certora specs postulate.",
+      "lean_theorem": "AaveArith.rayMul_lower (+ AaveArith.rayMul_upper)",
+      "lean_statement": "RAY ≤ index → x ≤ rayMul x index;  index ≤ 2*RAY → rayMul x index ≤ 2*x",
+      "status": "proven",
+      "discharged_by": "neural generator (F0008), kernel-admitted; #print axioms ⊆ {propext, Classical.choice, Quot.sound}"
+    },
+    {
+      "id": "rayDiv_bounds",
+      "source": "promoted from not_yet_discharged (Finding 0008, Task 0014 Step 0)",
+      "cvl_source": "Aave ray-math bounds postulated in Certora specs — now theorems",
+      "math_statement": "RAY <= index => rayDiv(x,index) <= x;  0 < index & index <= 2*RAY => x/2 <= rayDiv(x,index)",
+      "informal": "rayDiv(x,index)=floor(x*RAY/index) is bounded above by x when index>=RAY and below by x/2 when index<=2*RAY.",
+      "lean_theorem": "AaveArith.rayDiv_upper (+ AaveArith.rayDiv_lower)",
+      "lean_statement": "RAY ≤ index → rayDiv x index ≤ x;  0 < index → index ≤ 2*RAY → x/2 ≤ rayDiv x index",
+      "status": "proven",
+      "discharged_by": "neural generator (F0008), kernel-admitted; #print axioms ⊆ {propext, Classical.choice, Quot.sound}"
+    }
+  ],
+  "not_yet_discharged": [
+    "the forall arithmetic lemmas (e.g. (s_bal - ass/index)*index == s_bal*index - ass)"
+  ],
+  "trusted_base_caveat": "HONEST: theorems hold over ℕ (floor division / addition), not 256-bit word arithmetic. mulDiv: CVL runs on uint256 with overflow обвязка (`<= maxUint128()`); the ℕ theorems transfer ONLY under `x*y < 2^256`. erc20_transfer_sum_preserved: the ℕ identity transfers to uint256 ONLY under `bal[dst] + amt < 2^256`, the same non-overflow guard the harness enforces via `require(balanceOf[to] <= type(uint128).max)`. Linking the BitVec-256 wraparound is the next discharge step; until then the bridge covers the ARITHMETIC law, not the wraparound.",
+  "fraction_discharged": "The mulDiv round-down family (3) + product/Σ conservation (2) + the mulDiv tightness bracket and rayMul/rayDiv bounds (promoted from not_yet_discharged, Finding 0008 / Task 0014 Step 0). Remaining: the forall arithmetic lemmas. Every discharged theorem is kernel-audited by AaveArith.AxiomAudit (#print axioms ⊆ {propext, Classical.choice, Quot.sound}, no sorryAx)."
+}

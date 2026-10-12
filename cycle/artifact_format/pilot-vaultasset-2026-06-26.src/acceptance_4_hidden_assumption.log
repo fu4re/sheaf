@@ -1,0 +1,22 @@
+# Acceptance #4 — linter catches a hidden assumption (real pilot)
+# Demonstration: remove the trusted-base leaf A_solver from ledger.yaml,
+# leaving C1/C2's 'assumed' edges dangling. The package must go INVALID, exit 1.
+
+$ python -m assurance.verify_package <pilot>   # before: WELL-FORMED
+------------------------------------------------------------------------
+  15 pass · 0 flag · 0 blocked
+  VERDICT: WELL-FORMED  (exit 0)
+
+# --- delete leaf A_solver from trusted/ledger.yaml ---
+removed A_solver from ledger
+
+$ python -m assurance.verify_package <pilot>   # after: INVALID
+assurance package: /private/tmp/pilot_demo
+------------------------------------------------------------------------
+  [ FLAG] closure [C1 -> A_solver]: depends on leaf 'A_solver' absent from ledger.yaml (hidden assumption / dangling leaf)
+  [ FLAG] closure [C2 -> A_solver]: depends on leaf 'A_solver' absent from ledger.yaml (hidden assumption / dangling leaf)
+------------------------------------------------------------------------
+  13 pass · 2 flag · 0 blocked
+  VERDICT: INVALID  (exit 1)
+
+EXIT CODE: 1

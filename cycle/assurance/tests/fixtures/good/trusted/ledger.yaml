@@ -1,0 +1,22 @@
+lean_theorems:
+  - id: L_muldiv
+    statement_human: "mulDiv rounds down: y<=d => mulDiv(x,y,d) <= x"
+    statement_formal: "y <= d -> mulDiv x y d <= x"
+    file: "evidence/lean/AaveArith/Basic.lean"
+    theorem_name: "AaveArith.mulDiv_le_left"
+    build_status: ok
+    status: proven
+assumptions:
+  - id: A_noreentry
+    statement_human: "external calls do not reenter the vault"
+    statement_formal: "reentrancy_frame == none"
+    why_assumed: "outside the solver's scope for this slice"
+    risk_if_false: "the invariant may break under a reentrant call"
+    status: assumed
+harness_faithfulness:
+  - id: H_model
+    target: "MiniVault.deposit"
+    claim: "the harness models the deployed bytecode faithfully"
+    evidence: "not yet measured"
+    evidence_ref: "n/a"
+    status: unverified

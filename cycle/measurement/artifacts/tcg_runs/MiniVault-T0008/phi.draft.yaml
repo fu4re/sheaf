@@ -1,0 +1,65 @@
+schema: tcg/phi/v1
+contract: MiniVault
+method: deposit
+intent_ref: intent.txt
+spec:
+  pre:
+  - id: pre_guard_0
+    solidity_expr: assets <= type(uint128).max
+    checked_as: assume
+    source: sut_prefixed_guard
+  - id: pre_guard_1
+    solidity_expr: totalAssets <= type(uint128).max
+    checked_as: assume
+    source: sut_prefixed_guard
+  - id: pre_guard_2
+    solidity_expr: totalShares <= type(uint128).max
+    checked_as: assume
+    source: sut_prefixed_guard
+  trace:
+  - id: trace_nonreentrant
+    kind: reentrancy_frame
+    checked_as: ext_calls_untrusted
+    status: declared
+    note: MVP mechanically checks only the non-reentrant subset via --model-checker-ext-calls
+      untrusted (havoc wall); deep Trace deferred
+  post:
+  - id: post_shares_backed_by_assets
+    solidity_expr: totalShares == totalAssets
+    shape: stateless
+    checked_as: assert
+    informal: every share is backed by an asset unit; no value minted from air
+  exit:
+    admissible:
+    - halt
+    - revert
+    forbidden_conditions:
+    - condition: overflow
+      target: overflow
+    - condition: underflow
+      target: underflow
+    - condition: div_by_zero
+      target: divByZero
+    checked_as: smtchecker_safety_targets
+    status: deferred
+    note: overflow/underflow/div-by-zero ARE SMTChecker safety targets, but the current
+      solver runner parses assert-target verdicts only (the 'Overflow … happens here'
+      phrasing is not parsed) ⇒ exit-safety is NOT soundly discharged yet and is deferred,
+      not claimed. Out-of-gas also deferred.
+coverage:
+  checked_dimensions:
+  - pre
+  - post
+  deferred_dimensions:
+  - trace-deep
+  - exit-safety
+  - exit-outofgas
+  note: K mechanically PROVES Post (assert) and INCORPORATES Pre (assume/require).
+    Trace-deep hits the havoc wall (setup P8); exit-safety needs a safety-verdict
+    parser the runner lacks; exit-outofgas is out of SMTChecker scope. These are represented
+    in φ but NOT discharged ⇒ φ_context non-empty ⇒ a source-level run is ⊥_assumptions_open,
+    NOT green.
+provenance:
+  spec_source: replay:MiniVault__spec.seed.json
+  model: none
+  invariant_name: shares_backed_by_assets

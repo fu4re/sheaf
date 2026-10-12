@@ -1,0 +1,3 @@
+# Assurance package linter — pinned deps (kept minimal: a third-party auditor
+# must be able to re-run verify_package.py with one `pip install -r`).
+PyYAML==6.0.2

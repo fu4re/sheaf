@@ -1,0 +1,30 @@
+meta:
+  contract: MiniVaultBuggy
+  method: deposit
+  date: '2026-06-29'
+  task: tcg assurance package (T2)
+  phi_hash: 41df8c318802dd635d011e6f6c62254fe5f6966065f0182508bbd2e9d8d6fd34
+  assurance_level: ⊥_gen
+  claim_scope: none (refuted)
+  note: Source-level run. A proven Post over an OPEN dischargeable leaf (H_bytecode
+    / phi_context) is NOT green — see render-rule.
+claims:
+- id: C1
+  shape: stateless
+  evidence_record: R_post
+  human: 'Honest negative: the Post invariant `totalShares == totalAssets` is REFUTED
+    with a concrete counterexample (no value is claimed proved).'
+ledger:
+  lean_theorems: []
+  harness_faithfulness: []
+  assumptions:
+  - id: A_solver
+    leaf_class: irreducible
+    status: assumed
+    statement_human: The solver's refuting witness is a real reachable counterexample.
+    statement_formal: trust(solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled)
+      targets=['assert']) for the counterexample
+    why_assumed: ADR Assumption 3 — the refutation is the solver's; the witness is
+      retained and re-checkable.
+    risk_if_false: A solver bug could surface a spurious counterexample; mitigated
+      by the concrete witness which --replay re-derives.

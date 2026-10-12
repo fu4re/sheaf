@@ -1,0 +1,33 @@
+🏃 Running Kontrol proofs 🏃 
+ Add `--verbose` to `kontrol prove` for more details!
+Selected functions: test%CoverageTest.test_coverage_miss(uint256)
+Running setup functions in parallel: test%CoverageTest.setUp()
+test%CoverageTes… PASSED: 5 nodes: 0 pending|1 passed|0 failing|0 vacuous|0 ref…
+Running test functions in parallel: 
+test%CoverageTest.test_coverage_miss(uint256)
+WARNING 2026-07-15 15:55:16,191 pyk.proof.proof - Terminating proof early because fail_fast is set: test%CoverageTest.test_coverage_miss(uint256):0
+test%CoverageTest.test_covera… FAILED: 11 nodes: 0 pending|1 passed|1 failing|0…
+❌ PROOF FAILED ❌ test%CoverageTest.test_coverage_miss(uint256):0
+⏳ Time: 35s ⏳
+1 Failure nodes. (0 pending and 1 failing)
+
+Failing nodes:
+
+  Node id: 14
+  Status Code:
+    EVMC_REVERT
+  Output:
+    Assertion failed - assert() condition was false
+  Path condition:
+    { true == x <=Int 10 }
+  Model:
+    block.timestamp = 1073741825
+    block.number = 16777217
+    block.prevrandao = 0
+    x = 0
+
+Join the Runtime Verification communities for support:
+    telegram: https://t.me/rv_kontrol
+    discord:  https://discord.gg/CurfmXNtbN
+
+Access documentation for Kontrol at https://docs.runtimeverification.com/kontrol

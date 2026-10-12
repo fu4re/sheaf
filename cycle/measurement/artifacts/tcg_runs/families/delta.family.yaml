@@ -1,0 +1,18 @@
+schema: tcg/vacuity_family/v1
+name: delta
+# A 2-state Hoare property (the recipient's balance rises by >= amount), inline in transfer
+# ⇒ CHC+BMC (CHC reports the burning-fee under-credit as inconclusive; BMC catches it).
+# This family CLEARS (PASS): the delta refutes the burning-fee adversary that conservation
+# was blind to (Finding 0005).
+invariant: "balanceOf[to] >= beforeTo + amount"
+engines: [chc, bmc]
+reach_target:
+  template: trusted/harness/cross/MiniERC20Delta.sol
+  contract: MiniERC20Delta
+members:
+  honest:MiniERC20:
+    template: trusted/harness/cross/MiniERC20Delta.sol
+    contract: MiniERC20Delta
+  adv:BurnFee:
+    template: trusted/harness/cross/BurnFeeERC20Delta.sol
+    contract: BurnFeeERC20Delta

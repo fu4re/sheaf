@@ -1,0 +1,78 @@
+meta: {}
+lean_theorems:
+- id: L_mulDiv_le_when_y_le_denom
+  statement_human: mulDiv_le_when_y_le_denom
+  statement_formal: y ≤ d → mulDiv x y d ≤ x
+  file: evidence/lean/L_mulDiv_le_when_y_le_denom__Basic.lean
+  theorem_name: AaveArith.mulDiv_le_left
+  build_status: ok
+  status: proven
+  axioms:
+  - Quot.sound
+  - propext
+- id: L_rayMul_bounds
+  statement_human: rayMul(x,index)=floor(x*index/RAY) is bounded below by x when index>=RAY
+    and above by 2x when index<=2*RAY — exactly the fixed-point bounds Aave's Certora
+    specs postulate.
+  statement_formal: RAY ≤ index → x ≤ rayMul x index;  index ≤ 2*RAY → rayMul x index
+    ≤ 2*x
+  file: evidence/lean/L_rayMul_bounds__Basic.lean
+  theorem_name: AaveArith.rayMul_lower (+ AaveArith.rayMul_upper)
+  build_status: ok
+  status: proven
+  axioms:
+  - Classical.choice
+  - Quot.sound
+  - propext
+assumptions:
+- id: A_solver
+  leaf_class: irreducible
+  status: assumed
+  statement_human: The SMT solver's verdicts (z3 via SMTChecker) are sound.
+  statement_formal: trust(solc 0.8.35+commit.47b9dedd.Darwin.appleclang chc z3(bundled)
+    targets=['assert']) — no independent kernel re-check of the SMT proof
+  why_assumed: ADR Assumption 3. The CHC/BMC proof is taken on the solver's word;
+    lean-smt kernel reconstruction would replace this leaf (separate track). Visible,
+    not hidden.
+  risk_if_false: A solver soundness bug would make a 'proven' claim false. Mitigated
+    by determinism and witness-bearing refutations, not eliminated.
+- id: A_machine_semantics
+  leaf_class: irreducible
+  status: assumed
+  statement_human: SMTChecker's model of the EVM is faithful to the real EVM.
+  statement_formal: model(SMTChecker EVM) ≈ real EVM / KEVM bytecode semantics
+  why_assumed: ADR Assumption 1. The source-level proof reasons over SMTChecker's
+    EVM abstraction; a full bytecode-semantics discharge (KEVM/Halmos) is a separate
+    verify-level.
+  risk_if_false: A semantic gap between the modelled and the executed EVM could let
+    a 'proven' source property fail on-chain.
+- id: A_human_intent
+  leaf_class: irreducible
+  status: assumed
+  statement_human: H attests that φ captures the intended economic property.
+  statement_formal: φ ≈ intent (frozen by H; the single non-formal trust leaf)
+  why_assumed: ADR Assumption 7. The translation from human economic intent to the
+    formal φ is validated by a human, not a machine.
+  risk_if_false: If φ misstates the intent, a correct proof discharges the wrong property.
+- id: phi_context
+  leaf_class: dischargeable
+  status: assumed
+  statement_human: The deferred φ dimensions are NOT mechanically discharged.
+  statement_formal: φ_context = ['trace-deep', 'exit-safety', 'exit-outofgas'] (declared
+    in φ, not checked by K)
+  why_assumed: ADR §2.2. Trace-deep, exit-safety and exit-outofgas are represented
+    in φ but not discharged at source level (havoc wall / runner limits).
+  risk_if_false: A property in φ_context could fail though the checked subset holds
+    — the verified claim covers only φ_checked.
+  discharge_path: 'full-tuple φ coverage: deep-Trace via KEVM/Halmos, exit-safety
+    via a safety-verdict parser (backlog).'
+harness_faithfulness:
+- id: H_bytecode
+  leaf_class: dischargeable
+  target: source ↔ deployed runtime bytecode
+  claim: the verified source compiles to the deployed runtime bytecode, bit-identical
+  evidence: not measured at source level (runtime-hash + pinned settings + immutables/constructor/metadata
+    accounting is the intended evidence — Sourcify-style)
+  evidence_ref: n/a
+  status: unverified
+  discharge_path: runtime bytecode hash + pinned compiler settings (Inv.7).

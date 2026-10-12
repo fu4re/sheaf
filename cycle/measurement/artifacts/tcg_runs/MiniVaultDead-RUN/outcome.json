@@ -1,0 +1,29 @@
+{
+  "schema": "tcg/outcome/v1",
+  "stage": "vacuity",
+  "contract": "MiniVaultDead",
+  "method": "deposit",
+  "k_result": "accept",
+  "vacuity": "FLAG",
+  "terminal": "vacuous_proof",
+  "terminal_exit": 3,
+  "process_exit": 3,
+  "verified": false,
+  "phi_checked": [
+    "pre",
+    "post"
+  ],
+  "phi_context": [
+    "trace-deep",
+    "exit-safety",
+    "exit-outofgas"
+  ],
+  "bytecode_identity": "unverified",
+  "reasons": [
+    "vacuity gate FLAG — the 'proved' is (partly) vacuous"
+  ],
+  "open_dischargeable": [],
+  "assumed_irreducible": [],
+  "pending_gates": [],
+  "claim_scope": "none (vacuous)"
+}

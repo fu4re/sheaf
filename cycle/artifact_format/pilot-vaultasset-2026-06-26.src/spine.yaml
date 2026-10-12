@@ -1,0 +1,109 @@
+# Assurance-graph spine — VaultAssetAG cross-contract solvency (Task 0003 pilot).
+#
+# This file is the EPISTEMIC composition, authored by hand. The records carry the
+# mechanical facts (what solved, what built); this spine says how they compose into
+# a claim, which edges are `proven` (traverse) vs `assumed` (stop), and what enters
+# the trusted base. assemble.py fuses spine + records into the package.
+#
+# Structure: assume-guarantee on A∘B (vault ∘ ERC20).
+#   C1  caller solvency  A ⊨ I_A  under the assumed callee guarantee G_B
+#         ├─ proven →  C2          B actually delivers G_B (the assumption discharged)
+#         ├─ proven →  L_cons      the tracked-sum ghost is faithful (Lean kernel)
+#         ├─ assumed → A_ag_rule   the A/G composition rule is sound for this frame
+#         ├─ assumed → A_solver    we trust z3/SMTChecker on C1 (not re-checked by Lean)
+#         └─ assumed → H_model     harness ↔ deployed bytecode (the moat, unverified)
+#   C2  callee guarantee B ⊨ G_B   (proven SMT chc+bmc)
+#         ├─ proven →  L_cons
+#         └─ assumed → A_solver
+#   C3  naive over-claim on the BUGGY vault — refuted with a witness (honest negative)
+
+meta:
+  contract: VaultAssetAG
+  date: "2026-06-26"
+  task: "0003 assurance package (T2)"
+  composition: assume-guarantee (A∘B, single external call, non-reentrant frame)
+  note: >
+    Cross-contract solvency holds for the vault composed with an honest ERC20.
+    The mined weakest-sufficient guarantee is `at_least`; candidates `monotone`,
+    `upper_only`, `irrelevant` were solver-refuted as insufficient (see
+    measurement/artifacts/cross_ag__triage.json). The guarantee is not assumed on
+    faith — it is discharged by C2.
+
+claims:
+  - id: C1
+    shape: quantified-over-mapping
+    evidence_record: R_caller
+    human: >
+      The vault stays solvent — balanceOf(vault) >= totalAssets — when composed with
+      an ERC20 that honours the callee guarantee.
+    depends_on:
+      - {kind: claim, ref: C2, status: proven,
+         human: "the ERC20 callee actually delivers the guarantee the caller assumed (B ⊨ G_B)"}
+      - {kind: lean_theorem, ref: L_cons, status: proven,
+         human: "the tracked-sum ghost is faithful: a transfer preserves Σ balance (Lean kernel)"}
+      - {kind: assumption, ref: A_ag_rule, status: assumed,
+         human: "assume-guarantee composition is sound for this single-call, non-reentrant frame"}
+      - {kind: assumption, ref: A_solver, status: assumed,
+         human: "the SMT proof of C1 is trusted (z3/SMTChecker), not re-checked by the Lean kernel"}
+      - {kind: harness_faithfulness, ref: H_model, status: assumed,
+         human: "the cross harness models the deployed bytecode (unverified — the moat)"}
+
+  - id: C2
+    shape: temporal-2state
+    evidence_record: R_callee
+    human: >
+      The ERC20 callee guarantee G_B: every transfer credits the recipient by at
+      least `amount` (callee-side form of the mined `vaultBal_post >= vaultBal + assets`).
+    depends_on:
+      - {kind: lean_theorem, ref: L_cons, status: proven,
+         human: "Σ-conservation underpins the per-transfer delta the guarantee asserts"}
+      - {kind: assumption, ref: A_solver, status: assumed,
+         human: "the SMT proof of C2 (chc+bmc) is trusted, not re-checked by the Lean kernel"}
+
+  - id: C3
+    shape: stateless
+    evidence_record: R_bug
+    human: >
+      Honest negative: the naive over-claim that the BUGGY vault never mints a share
+      from nothing is REFUTED — deposit(0) mints one share against zero assets.
+
+ledger:
+  meta:
+    bridge_note: "Lean leaf is a level-1 bridge (text-match of formulations); see axiom_registry.json."
+  lean_theorems:
+    - id: L_cons
+      evidence_record: R_lean_cons
+      status: proven
+
+  assumptions:
+    - id: A_ag_rule
+      statement_human: "Assume-guarantee composition is sound for this configuration."
+      statement_formal: "(A ⊨ I_A | G_B) ∧ (B ⊨ G_B) ⟹ (A∘B ⊨ I_A), single external call, no reentrancy"
+      why_assumed: >
+        The composition meta-rule is applied, not proven here. It is sound for a single
+        external call with a non-reentrant frame (Finding 0004); a general proof is a
+        separate track.
+      risk_if_false: >
+        If reentrancy or multiple interleaved external calls are possible, the caller
+        proof under havoc+require(G_B) may not transfer to A∘B.
+      status: assumed
+    - id: A_solver
+      statement_human: "The SMT solver's verdicts (z3 via SMTChecker) are sound."
+      statement_formal: "trust(z3 4.16.0 + SMTChecker CHC/BMC) — no independent kernel re-check"
+      why_assumed: >
+        The CHC/BMC proofs of C1 and C2 are taken on the solver's word. lean-smt proof
+        reconstruction (DoD #3) would replace this leaf with a Lean-kernel re-check; that
+        experiment is time-boxed and tracked separately. Until then, this leaf is visible,
+        not hidden.
+      risk_if_false: >
+        A solver soundness bug would make a 'proven' claim false. Mitigated by determinism
+        and the witness-bearing refutations, but not eliminated.
+      status: assumed
+
+  harness_faithfulness:
+    - id: H_model
+      target: "VaultAssetAG (vault) ∘ MiniERC20 (asset)"
+      claim: "the cross harness's modelled semantics equal the deployed EVM bytecode"
+      evidence: "not measured for this pilot (diff-fuzz N runs is the intended evidence)"
+      evidence_ref: "n/a"
+      status: unverified

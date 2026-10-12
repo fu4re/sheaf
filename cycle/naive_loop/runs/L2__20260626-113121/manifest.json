@@ -1,0 +1,41 @@
+[
+  {
+    "file": "inv_solvency_price_geq_1.sol",
+    "name": "solvency_price_geq_1",
+    "informal": "totalAssets >= totalShares after any deposit with fee and floor-division share minting: the vault exchange rate never drops below 1. Proved by decomposing newAssets - newShares into three non-negative summands (price surplus, fee, rounding gap) and leveraging Solidity 0.8 underflow checks.",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": true,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Two functions: non-empty vault deposit and initial deposit. All assertions proved safe by CHC/z3. Vacuity confirmed via mutated strict-inequality counterexample. Overflow bounds (1e30) used as sound assume-abstraction."
+  },
+  {
+    "file": "inv_fee_backing.sol",
+    "name": "fee_backing",
+    "informal": "accruedFees <= totalAssets — the fee accumulator never exceeds total vault assets. Proved for deposit (fee accrual), initial deposit, and fee withdrawal paths.",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": true,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Three functions covering deposit, initial deposit, and fee withdrawal. All 3 assertions proved safe by CHC/z3. Vacuity confirmed via flipped-direction counterexample. Overflow bounds (1e30) used as sound assume-abstraction."
+  },
+  {
+    "file": "inv_share_price_monotone.sol",
+    "name": "share_price_monotone",
+    "informal": "Shares minted per deposit never exceed the proportional share entitlement (no dilution via rounding). Formally: sharesToMint * totalAssets <= netDeposit * totalShares, which follows directly from floor-division semantics.",
+    "class": "stateless",
+    "used_ghost": false,
+    "used_snapshot": false,
+    "used_assume_abstraction": true,
+    "self_vacuity_checked": true,
+    "engine": "smtchecker",
+    "agent_verdict": "proved",
+    "notes": "Single function. Assertion proved safe by CHC/z3. Vacuity confirmed via mutated strict-inequality counterexample at equality point (1:1:1:0). Overflow bounds (1e30) used as sound assume-abstraction."
+  }
+]

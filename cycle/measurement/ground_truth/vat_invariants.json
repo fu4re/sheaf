@@ -1,0 +1,41 @@
+{
+  "_source": "MakerDAO dss @ fa4f663, src/vat.sol; canonical invariants from the K-framework / Certora verification of DSS",
+  "contract": "Vat",
+  "method": "frob",
+  "note": "Expert ground-truth conservation invariants. Σ over a mapping is inexpressible in stateless Solidity (needs a tracked-sum ghost — same wall as Finding 0001); recorded in math form here.",
+  "economic_invariants": [
+    {
+      "id": "dai_conservation",
+      "law": "Σ dai[u] == debt",
+      "informal": "total Dai issued equals the sum of all internal Dai balances (no Dai from air)",
+      "atoms": ["dai", "debt", "sum"],
+      "harness": "trusted/harness/VatDaiConservation.sol (PROVEN)"
+    },
+    {
+      "id": "sin_conservation",
+      "law": "Σ sin[u] == vice",
+      "informal": "total unbacked Dai equals the sum of all system-debt (sin) balances",
+      "atoms": ["sin", "vice", "sum"]
+    },
+    {
+      "id": "art_conservation",
+      "law": "ilks[i].Art == Σ_u urns[i][u].art",
+      "informal": "an ilk's total normalised debt equals the sum of its urns' normalised debts",
+      "atoms": ["Art", "art", "sum"]
+    },
+    {
+      "id": "debt_solvency",
+      "law": "debt == vice + Σ_i (ilks[i].Art * ilks[i].rate)",
+      "informal": "every Dai is backed by a CDP (Art·rate) or accounted as system debt (vice)",
+      "atoms": ["debt", "vice", "Art", "rate", "sum", "rayMul"],
+      "note": "depends on the nonlinear Art·rate -> needs the ray-mul ghost + Lean mulDiv axioms"
+    },
+    {
+      "id": "fee_monotonic",
+      "law": "fold: accumulated backed debt only grows with the rate delta (no value lost)",
+      "informal": "rate accrual adds dai/debt consistently; rate moves are tracked",
+      "atoms": ["rate", "debt", "monotonic"],
+      "note": "temporal / 2-state (old())"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+Parse command line options                                   =  0.017s
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q4/q4c-consequence-spec.k)
+Importing: Source(/Users/akkedeline/sheaf/kprove-test/repro/t1-q4/q4-semantics.k)
+Outer parsing [65 modules]                                   =  0.514s
+  New scanner: Q4C-CONSEQUENCE-SPEC-RULE-CELLS               =  0.465s
+Parse spec modules [1/1 rules]                               =  0.833s
+Apply prover steps                                           =  0.225s
+Executing [kore-exec, /Users/akkedeline/sheaf/kprove-test/repro/t1-q4/./q4-kompiled/definition.kore, --module, Q4, --prove, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-08-463-15e6a239-8069-4f1a-ac61-8347d2a8b19c/spec.kore, --spec-module, Q4C-CONSEQUENCE-SPEC, --output, /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-08-463-15e6a239-8069-4f1a-ac61-8347d2a8b19c/result.kore]
+Executing command: kore-exec /Users/akkedeline/sheaf/kprove-test/repro/t1-q4/./q4-kompiled/definition.kore --module Q4 --prove /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-08-463-15e6a239-8069-4f1a-ac61-8347d2a8b19c/spec.kore --spec-module Q4C-CONSEQUENCE-SPEC --output /var/folders/_f/8npvqpdd47x5mgvsr1ddd_vh0000gn/T/.kprove-2026-07-15-19-07-08-463-15e6a239-8069-4f1a-ac61-8347d2a8b19c/result.kore
+Backend                                                      =  0.419s
+#Top
+Cleanup                                                      =  0.020s
+Total                                                        =  2.028s

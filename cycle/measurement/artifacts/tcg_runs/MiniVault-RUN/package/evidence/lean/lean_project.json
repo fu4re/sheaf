@@ -1,0 +1,9 @@
+{
+  "project": "../../../../../trusted/proofs/aave_arith",
+  "project_note": "path relative to this package dir",
+  "audit_module": "AaveArith.AxiomAudit",
+  "theorems": {
+    "L_mulDiv_le_when_y_le_denom": "cycle/trusted/proofs/aave_arith",
+    "L_rayMul_bounds": "cycle/trusted/proofs/aave_arith"
+  }
+}

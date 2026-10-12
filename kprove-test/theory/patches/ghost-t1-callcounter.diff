@@ -1,0 +1,27 @@
+--- a/evm.md
++++ b/evm.md
+@@ -38,6 +38,8 @@
+         <mode> $MODE:Mode </mode>
+         <schedule> $SCHEDULE:Schedule </schedule>
+         <useGas> $USEGAS:Bool </useGas>
++
++        <callCounter> 0 </callCounter>   // GHOST: user-call frame counter (outside <ethereum>, survives revert)
+ 
+         <ethereum>
+ 
+@@ -1679,6 +1681,7 @@
+          </k>
+          <useGas> USEGAS:Bool </useGas>
+          <callDepth> CD => CD +Int 1 </callDepth>
++         <callCounter> CC => CC +Int 1 </callCounter>   // GHOST: +1 per message-call frame (CALL/CALLCODE/DELEGATECALL/STATICCALL)
+          <callData> _ => ARGS </callData>
+          <callValue> _ => APPVALUE </callValue>
+          <id> _ => ACCTTO </id>
+@@ -1956,6 +1959,7 @@
+          <callGas> GCALL => #if USEGAS #then 0 #else GCALL #fi </callGas>
+          <caller> _ => ACCTFROM </caller>
+          <callDepth> CD => CD +Int 1 </callDepth>
++         <callCounter> CC => CC +Int 1 </callCounter>   // GHOST: +1 per create frame (CREATE/CREATE2)
+          <callData> _ => .Bytes </callData>
+          <callValue> _ => VALUE </callValue>
+          <account>

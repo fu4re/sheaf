@@ -1,0 +1,54 @@
+{
+  "contract": "ProportionalVault",
+  "method": "deposit",
+  "spec_source": "replay:ProportionalVault__spec.seed.json",
+  "invariant": {
+    "name": "solvency_price_geq_1",
+    "solidity_expr": "totalShares <= totalAssets",
+    "kind": "contract_invariant",
+    "informal": "share price >= 1: every share is backed by at least one asset unit (no dilution)"
+  },
+  "gateway": {
+    "mode": "ghost:ProportionalVaultGhost.sol",
+    "harness": "measurement/artifacts/build/ProportionalVault__harness.sol",
+    "compiles": true
+  },
+  "verdict": {
+    "verdict": "proved",
+    "witness": null,
+    "reason": null,
+    "engine": "chc",
+    "solvers": [
+      "z3"
+    ],
+    "targets": [
+      "assert"
+    ],
+    "solc_version": "0.8.35+commit.47b9dedd.Darwin.appleclang",
+    "command": [
+      "/opt/homebrew/bin/solc",
+      "--model-checker-engine",
+      "chc",
+      "--model-checker-targets",
+      "assert",
+      "--model-checker-solvers",
+      "z3",
+      "--model-checker-timeout",
+      "0",
+      "/Users/akkedeline/sheaf/cycle/measurement/artifacts/build/ProportionalVault__harness.sol"
+    ],
+    "duration_s": 0.237,
+    "raw": "Info: CHC: 1 verification condition(s) proved safe! Enable the model checker option \"show proved safe\" to see all of them."
+  },
+  "ground_truth_delta": {
+    "match": "exact",
+    "proposed_expr": "totalShares <= totalAssets",
+    "canonical_expr": "totalShares <= totalAssets",
+    "proposed_normalized": "totalShares<=totalAssets",
+    "canonical_normalized": "totalShares<=totalAssets"
+  },
+  "provenance": {
+    "backend": "seed",
+    "model_requested": "none"
+  }
+}

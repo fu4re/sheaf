@@ -1,0 +1,32 @@
+🏃 Running Kontrol proofs 🏃 
+ Add `--verbose` to `kontrol prove` for more details!
+Selected functions: test%CProof.prove_withdraw_keeps(uint256)
+Running setup functions in parallel: test%CProof.setUp()
+test%CProof.…  PASSED: 4 nodes: 0 pending|1 passed|0 failing|0 vacuous|0 refute…
+Running test functions in parallel: test%CProof.prove_withdraw_keeps(uint256)
+WARNING 2026-07-17 13:10:50,853 pyk.proof.proof - Terminating proof early because fail_fast is set: test%CProof.prove_withdraw_keeps(uint256):0
+test%CProof.prove_withdraw… FAILED: 12 nodes: 0 pending|0 passed|1 failing|0 va…
+❌ PROOF FAILED ❌ test%CProof.prove_withdraw_keeps(uint256):0
+⏳ Time: 54s ⏳
+1 Failure nodes. (0 pending and 1 failing)
+
+Failing nodes:
+
+  Node id: 14
+  Status Code:
+    EVMC_REVERT
+  Output:
+    Assertion failed - assert() condition was false
+  Path condition:
+    #Top
+  Model:
+    block.prevrandao = 0
+    amt = 1
+    block.number = 16777217
+    block.timestamp = 1073741825
+
+Join the Runtime Verification communities for support:
+    telegram: https://t.me/rv_kontrol
+    discord:  https://discord.gg/CurfmXNtbN
+
+Access documentation for Kontrol at https://docs.runtimeverification.com/kontrol

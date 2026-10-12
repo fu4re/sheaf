@@ -1,0 +1,83 @@
+{
+  "task": "0003_cross_contract_assume_guarantee",
+  "obligation_1_caller_proof": {
+    "invariant": "vaultBal >= totalAssets",
+    "verdict": "proven"
+  },
+  "interface_mining": {
+    "clauses": [
+      {
+        "name": "exact",
+        "expr": "vaultBal_post == vaultBal + assets",
+        "sufficient": true,
+        "verdict": "proven"
+      },
+      {
+        "name": "at_least",
+        "expr": "vaultBal_post >= vaultBal + assets",
+        "sufficient": true,
+        "verdict": "proven"
+      },
+      {
+        "name": "monotone",
+        "expr": "vaultBal_post >= vaultBal",
+        "sufficient": false,
+        "verdict": "refuted"
+      },
+      {
+        "name": "upper_only",
+        "expr": "vaultBal_post <= vaultBal + assets",
+        "sufficient": false,
+        "verdict": "refuted"
+      },
+      {
+        "name": "irrelevant",
+        "expr": "assets <= type(uint128).max",
+        "sufficient": false,
+        "verdict": "refuted"
+      }
+    ],
+    "sufficient": [
+      "exact",
+      "at_least"
+    ],
+    "discarded_insufficient": [
+      "monotone",
+      "upper_only",
+      "irrelevant"
+    ],
+    "weakest_sufficient": "at_least"
+  },
+  "obligation_2A_conservation": {
+    "guarantee": "ghostSum == totalSupply",
+    "verdicts": {
+      "MiniERC20 (honest)": "proven",
+      "Buggy (supply-inflation)": "refuted",
+      "FeeERC20 (losing-fee)": "refuted",
+      "BurnFeeERC20 (burning-fee)": "proven"
+    },
+    "note": "necessary not sufficient: BurnFeeERC20 proves conservation yet under-credits — conservation != the mined caller clause"
+  },
+  "obligation_2B_delta_discharge": {
+    "guarantee": "transfer credits recipient by >= amount (callee-side form of mined `vaultBal_post >= vaultBal + assets`)",
+    "engines": "chc+bmc (BMC catches the 2-step CE CHC reports as unknown)",
+    "verdicts": {
+      "MiniERC20 (honest)": {
+        "bucket": "proven",
+        "by": {
+          "chc": "proven",
+          "bmc": "proven"
+        }
+      },
+      "BurnFeeERC20 (burning-fee)": {
+        "bucket": "refuted",
+        "by": {
+          "chc": "unknown",
+          "bmc": "refuted"
+        }
+      }
+    },
+    "note": "discharges the ACTUAL mined clause; BurnFeeERC20 refuted here though it passed 2A — gap closed"
+  },
+  "judge": "solver (SMTChecker/CHC+BMC/z3) — zero LLM judge"
+}

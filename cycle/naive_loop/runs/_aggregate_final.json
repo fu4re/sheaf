@@ -1,0 +1,131 @@
+{
+  "L1": {
+    "level": "L1",
+    "title": "simple linear vault (1:1, no fee, no rebase)",
+    "n_runs": 1,
+    "n_canonical": 3,
+    "mean_clean_rate": 1.0,
+    "stdev_clean_rate": 0.0,
+    "min_clean_rate": 1.0,
+    "max_clean_rate": 1.0,
+    "union_clean_count": 3,
+    "union_clean_rate": 1.0,
+    "union_proved_names": [
+      "conservation_1to1",
+      "no_orphan_shares",
+      "solvency_price_geq_1"
+    ],
+    "never_proved": [],
+    "union_by_class": {
+      "stateless": {
+        "total": 3,
+        "union_proved": 3
+      }
+    },
+    "false_proven_incidence": {},
+    "cost_usd_total": 0.3838,
+    "solc_iters_mean": 10
+  },
+  "L2": {
+    "level": "L2",
+    "title": "vault + fee + nonzero exchange rate (mulDiv rounding)",
+    "n_runs": 1,
+    "n_canonical": 3,
+    "mean_clean_rate": 1.0,
+    "stdev_clean_rate": 0.0,
+    "min_clean_rate": 1.0,
+    "max_clean_rate": 1.0,
+    "union_clean_count": 3,
+    "union_clean_rate": 1.0,
+    "union_proved_names": [
+      "fee_backing",
+      "share_price_monotone",
+      "solvency_price_geq_1"
+    ],
+    "never_proved": [],
+    "union_by_class": {
+      "stateless": {
+        "total": 3,
+        "union_proved": 3
+      }
+    },
+    "false_proven_incidence": {},
+    "cost_usd_total": 1.0696,
+    "solc_iters_mean": 15
+  },
+  "L3": {
+    "level": "L3",
+    "title": "vault + accrual/rebase over time",
+    "n_runs": 1,
+    "n_canonical": 3,
+    "mean_clean_rate": 1.0,
+    "stdev_clean_rate": 0.0,
+    "min_clean_rate": 1.0,
+    "max_clean_rate": 1.0,
+    "union_clean_count": 3,
+    "union_clean_rate": 1.0,
+    "union_proved_names": [
+      "accrual_on_balance_change",
+      "fees_monotonic",
+      "solvency_with_accrual"
+    ],
+    "never_proved": [],
+    "union_by_class": {
+      "temporal": {
+        "total": 2,
+        "union_proved": 2
+      },
+      "stateless": {
+        "total": 1,
+        "union_proved": 1
+      }
+    },
+    "false_proven_incidence": {},
+    "cost_usd_total": 0.7638,
+    "solc_iters_mean": 7
+  },
+  "L4": {
+    "level": "L4",
+    "title": "REAL CODE: MakerDAO Vat port (equivalence-proven, self-contained)",
+    "n_runs": 1,
+    "n_canonical": 4,
+    "mean_clean_rate": 0.0,
+    "stdev_clean_rate": 0.0,
+    "min_clean_rate": 0.0,
+    "max_clean_rate": 0.0,
+    "union_clean_count": 0,
+    "union_clean_rate": 0.0,
+    "union_proved_names": [],
+    "never_proved": [
+      "dai_conservation",
+      "debt_solvency",
+      "fee_monotonic",
+      "sin_conservation"
+    ],
+    "union_by_class": {
+      "quantified": {
+        "total": 3,
+        "union_proved": 0
+      },
+      "temporal": {
+        "total": 1,
+        "union_proved": 0
+      }
+    },
+    "false_proven_incidence": {
+      "debt_solvency": 1,
+      "dai_conservation": 1,
+      "sin_conservation": 1,
+      "fee_monotonic": 1
+    },
+    "cost_usd_total": 1.3982,
+    "solc_iters_mean": 19
+  }
+}
+
+ level | runs | mean(clean) ±sd | union/best-of-N | never proved | false-proven
+ ----------------------------------------------------------------------------------------
+   L1  |   1  | 1.00 ±0.00      | 1.00 (3/3)       |  0           | 0
+   L2  |   1  | 1.00 ±0.00      | 1.00 (3/3)       |  0           | 0
+   L3  |   1  | 1.00 ±0.00      | 1.00 (3/3)       |  0           | 0
+   L4  |   1  | 0.00 ±0.00      | 0.00 (0/4)       |  4           | 4

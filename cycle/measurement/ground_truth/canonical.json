@@ -1,0 +1,30 @@
+{
+  "_note": "Hand-fixed canonical economic invariants used by module [6] to compute the ground-truth delta. For Tier-1 mocks the canonical law is conservation totalShares==totalAssets. For Tier-2 (Aave) this will be vendored from the PropertyGPT replication package (T-05): totalSupply_EQ_sumAllBal etc.",
+  "MiniVault": {
+    "method": "deposit",
+    "canonical_invariant": {
+      "name": "shares_eq_assets_conservation",
+      "solidity_expr": "totalShares == totalAssets",
+      "atoms": ["totalShares", "totalAssets"],
+      "informal": "1:1 conservation — no value created from air"
+    }
+  },
+  "MiniVaultBuggy": {
+    "method": "deposit",
+    "canonical_invariant": {
+      "name": "shares_eq_assets_conservation",
+      "solidity_expr": "totalShares == totalAssets",
+      "atoms": ["totalShares", "totalAssets"],
+      "informal": "same conservation law; this contract deliberately VIOLATES it"
+    }
+  },
+  "ProportionalVault": {
+    "method": "deposit",
+    "canonical_invariant": {
+      "name": "solvency_price_geq_1",
+      "solidity_expr": "totalShares <= totalAssets",
+      "atoms": ["totalShares", "totalAssets"],
+      "informal": "share price >= 1: every share backed by >= 1 asset unit (no dilution)"
+    }
+  }
+}
